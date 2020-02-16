@@ -9,41 +9,41 @@ data class TimeTableInfo(
 )
 
 data class Mon(
-    val `1`: String,
-    val `2`: String,
-    val `3`: String,
-    val `4`: String,
-    val `5`: String
+    val `1`: String?,
+    val `2`: String?,
+    val `3`: String?,
+    val `4`: String?,
+    val `5`: String?
 )
 
 data class Tue(
-    val `1`: String,
-    val `2`: String,
-    val `3`: String,
-    val `4`: String,
-    val `5`: String
+    val `1`: String?,
+    val `2`: String?,
+    val `3`: String?,
+    val `4`: String?,
+    val `5`: String?
 )
 
 data class Wed(
-    val `1`: String,
-    val `2`: String,
-    val `3`: String,
-    val `4`: String,
-    val `5`: String
+    val `1`: String?,
+    val `2`: String?,
+    val `3`: String?,
+    val `4`: String?,
+    val `5`: String?
 )
 
 data class Thu(
-    val `1`: String,
-    val `2`: String,
-    val `3`: String,
-    val `4`: String,
-    val `5`: String
+    val `1`: String?,
+    val `2`: String?,
+    val `3`: String?,
+    val `4`: String?,
+    val `5`: String?
 )
 
 data class Fri(
-    val `1`: String,
-    val `2`: String,
-    val `3`: String,
-    val `4`: String,
-    val `5`: String
+    val `1`: String?,
+    val `2`: String?,
+    val `3`: String?,
+    val `4`: String?,
+    val `5`: String?
 )
