@@ -2,24 +2,23 @@ package com.gleam.kiwi.net
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.GET
+import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.POST
 
 
 interface KiwiServiceInterFace {
 
-    @GET("timetable")
-    fun getUsersTimeTable(@Field("id") id: String, @Field("token") token: String): Call<TimeTableInfo?>
+    @POST("timetable")
+    fun getUsersTimeTable(@Body userInfo: UserInfo): Call<TimeTableInfo?>
 
-    @GET("tasks")
-    fun getUsersTaskInfo(@Field("id") id: String, @Field("token") token: String): Call<TaskInfo?>
+    @POST("tasks")
+    fun getUsersTaskInfo(@Body userInfo: UserInfo): Call<TaskInfo?>
 
     @POST("user")
-    fun getUserInfo(@Field("id") id: String, @Field("hashed_password") hashedPassword: String): Call<UserInfo?>
+    fun getUserInfo(@Body userInfo: UserInfo): Call<UserInfo?>
 }
 
 class KiwiService {
@@ -28,7 +27,7 @@ class KiwiService {
 
 
     fun create(serviceClass: Class<KiwiServiceInterFace>): KiwiServiceInterFace {
-        val baseUrl = "API's URL"
+        val baseUrl = "URL"
         val gson = GsonBuilder()
             .serializeNulls()
             .create()
