@@ -11,13 +11,13 @@ import retrofit2.http.POST
 
 interface KiwiServiceInterFace {
 
-    @POST("timetable")
+    @POST("timetables")
     fun getUsersTimeTable(@Body userInfo: UserInfo): Call<TimeTableInfo?>
 
     @POST("tasks")
     fun getUsersTaskInfo(@Body userInfo: UserInfo): Call<TaskInfo?>
 
-    @POST("user")
+    @POST("users")
     fun getUserInfo(@Body userInfo: UserInfo): Call<UserInfo?>
 }
 
