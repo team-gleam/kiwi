@@ -1,6 +1,6 @@
 package com.gleam.kiwi.model
 
-data class TimeTableInfo(
+data class TimeTables(
     val timetable: Timetable
 )
 
