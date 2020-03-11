@@ -5,20 +5,30 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface KiwiServiceInterFace {
+    @POST("users")
+    fun registsUserInfo(@Body userInfo: UserInfo): Call<Unit>
+    @DELETE("users")
+    fun deleteUserInfo(@Body userInfo: UserInfo): Call<Unit>
+
+    @POST("tokens")
+    fun getNewToken(@Body userInfo: UserInfo): Call<String?>
+    @DELETE("tokens")
+    fun deleteToken(@Header("token") token: String): Call<Unit>
 
     @POST("timetables")
-    fun getUsersTimeTable(@Body userInfo: UserInfo): Call<TimeTableInfo?>
+    fun registUsersTimeTable(@Header("token") token: String, @Body timetable: TimeTableInfo): Call<Unit>
+    @GET("timetables")
+    fun getUsersTimeTable(@Header("token") token: String): Call<TimeTableInfo?>
 
     @POST("tasks")
-    fun getUsersTaskInfo(@Body userInfo: UserInfo): Call<TaskInfo?>
+    fun registUsersTaskInfo(@Header("token") token: String, @Body taskInfo: TaskInfo): Call<Unit>
+    @GET("tasks")
+    fun getUsersTaskInfo(@Header("token") token: String): Call<TaskInfo?>
 
-    @POST("users")
-    fun getUserInfo(@Body userInfo: UserInfo): Call<UserInfo?>
 }
 
 class KiwiService {
