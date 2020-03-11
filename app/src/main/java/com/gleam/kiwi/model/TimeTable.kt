@@ -1,9 +1,5 @@
 package com.gleam.kiwi.model
 
-data class TimeTables(
-    val timetable: Timetable
-)
-
 data class Timetable(
     val mon: Mon,
     val tue: Tue,

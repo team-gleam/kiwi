@@ -1,5 +1,6 @@
 package com.gleam.kiwi.model
 
 data class User(
-    val username: Strings
+    val username: String,
+    val password: String
 )
