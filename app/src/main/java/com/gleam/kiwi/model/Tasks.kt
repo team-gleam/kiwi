@@ -1,6 +1,6 @@
 package com.gleam.kiwi.model
 
-data class TaskInfo(
+data class Tasks(
     val tasks: List<Task>
 )
 
