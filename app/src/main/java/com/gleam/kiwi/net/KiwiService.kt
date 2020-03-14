@@ -39,7 +39,7 @@ interface KiwiServiceInterFace {
 }
 
 class KiwiService {
-    private val APIURL = ""
+    private val API_URL = ""
     lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
