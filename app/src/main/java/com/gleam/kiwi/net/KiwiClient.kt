@@ -1,48 +1,51 @@
 package com.gleam.kiwi.net
 
 import android.accounts.NetworkErrorException
-import retrofit2.Call
+import com.gleam.kiwi.model.Tasks
+import com.gleam.kiwi.model.Timetable
+import com.gleam.kiwi.model.User
 import java.io.IOException
 
 interface KiwiClientInterface {
-    fun registUserInfo(userInfo: UserInfo)
-    fun deleteUserInfo(userInfo: UserInfo)
+    fun signUp(user: User)
+    fun deleteUser(user: User)
 
-    fun getNewToken(userInfo: UserInfo): String?
+    fun getNewToken(user: User): String?
     fun deleteToken(token: String)
 
-    fun registUsersTimeTable(token: String, timetable: TimeTableInfo)
-    fun getUsersTimeTable(token: String): TimeTableInfo?
+    fun registerTimetable(token: String, timetable: Timetable)
+    fun getTimetable(token: String): Timetable?
 
-    fun registUsersTaskInfo(token: String, taskInfo: TaskInfo)
-    fun getUsersTaskInfo(token: String): TaskInfo?
+    fun registerTasks(token: String, task: Tasks)
+    fun getTasks(token: String): Tasks?
 }
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
     KiwiClientInterface {
-    override fun registUserInfo(userInfo: UserInfo) {
+    override fun signUp(user: User) {
         try {
-            val response = kiwiService.registsUserInfo(userInfo).execute()
+            kiwiService.signUp(user).execute()
         } catch (e: IOException) {
             throw e
         }
     }
 
-    override fun deleteUserInfo(userInfo: UserInfo) {
+    override fun deleteUser(user: User) {
         try {
-            val response = kiwiService.deleteUserInfo(userInfo).execute()
+            kiwiService.deleteUser(user).execute()
         } catch (e: IOException) {
             throw e
         }
     }
 
-    override fun getNewToken(userInfo: UserInfo): String? {
+    override fun getNewToken(user: User): String? {
         return try {
-            val response = kiwiService.getNewToken(userInfo).execute()
-            if (response.isSuccessful) {
-                response.body()
-            } else {
-                throw NetworkErrorException("Connection Error")
+            kiwiService.getNewToken(user).execute().let {
+                if (it.isSuccessful) {
+                    it.body()
+                } else {
+                    throw NetworkErrorException("Connection Error")
+                }
             }
         } catch (e: IOException) {
             throw e
@@ -51,43 +54,50 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
 
     override fun deleteToken(token: String) {
         try {
-            val response = kiwiService.deleteToken(token)
+            kiwiService.deleteToken(token)
         } catch (e: IOException) {
             throw e
         }
     }
 
-    override fun registUsersTimeTable(token: String, timetable: TimeTableInfo) {
+    override fun registerTimetable(token: String, timetable: Timetable) {
         try {
-            val response = kiwiService.registUsersTimeTable(token, timetable).execute()
+            kiwiService.registerTimetable(token, timetable).execute()
         } catch (e: IOException) {
             throw e
         }
     }
 
-    override fun getUsersTimeTable(token: String): TimeTableInfo? {
+    override fun getTimetable(token: String): Timetable? {
         return try {
-            val response = kiwiService.getUsersTimeTable(token).execute()
+            kiwiService.getTimetable(token).execute().let {
+                if (it.isSuccessful) {
+                    it.body()
+                } else {
+                    throw NetworkErrorException("Connection Error")
+                }
+            }
         } catch (e: IOException) {
             throw e
         }
     }
 
-    override fun registUsersTaskInfo(token: String, taskInfo: TaskInfo) {
+    override fun registerTasks(token: String, task: Tasks) {
         try {
-            val response = kiwiService.registUsersTaskInfo(token, taskInfo).execute()
+            kiwiService.registerTasks(token, task).execute()
         } catch (e: IOException) {
             throw e
         }
     }
 
-    override fun getUsersTaskInfo(token: String): TaskInfo? {
+    override fun getTasks(token: String): Tasks? {
         return try {
-            val response = kiwiService.getUsersTaskInfo(token).execute()
-            if (response.isSuccessful) {
-                response.body()
-            } else {
-                throw NetworkErrorException("Connection Error")
+            kiwiService.getTasks(token).execute().let {
+                if (it.isSuccessful) {
+                    it.body()
+                } else {
+                    throw NetworkErrorException("Connection Error")
+                }
             }
         } catch (e: IOException) {
             throw e
