@@ -1,17 +1,15 @@
 package com.gleam.kiwi.net
 
-import android.accounts.NetworkErrorException
 import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User
-import java.io.IOException
 
 interface KiwiClientInterface {
     fun signUp(user: User)
-    fun deleteUser(user: User)
+    fun revokeUser(user: User)
 
     fun getNewToken(user: User): String?
-    fun deleteToken(token: String)
+    fun revokeToken(token: String)
 
     fun registerTimetable(token: String, timetable: Timetable)
     fun getTimetable(token: String): Timetable?
@@ -23,84 +21,49 @@ interface KiwiClientInterface {
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
     KiwiClientInterface {
     override fun signUp(user: User) {
-        try {
-            kiwiService.signUp(user).execute()
-        } catch (e: IOException) {
-            throw e
-        }
+        kiwiService.signUp(user).execute()
     }
 
-    override fun deleteUser(user: User) {
-        try {
-            kiwiService.deleteUser(user).execute()
-        } catch (e: IOException) {
-            throw e
-        }
+    override fun revokeUser(user: User) {
+        kiwiService.revokeUser(user).execute()
     }
 
     override fun getNewToken(user: User): String? {
-        return try {
-            kiwiService.getNewToken(user).execute().let {
-                if (it.isSuccessful) {
-                    it.body()
-                } else {
-                    throw NetworkErrorException("Connection Error")
-                }
+        return kiwiService.getNewToken(user).execute().let {
+            if (it.isSuccessful) {
+                it.body()
             }
-        } catch (e: IOException) {
-            throw e
+            null
         }
     }
 
-    override fun deleteToken(token: String) {
-        try {
-            kiwiService.deleteToken(token)
-        } catch (e: IOException) {
-            throw e
-        }
+    override fun revokeToken(token: String) {
+        kiwiService.revokeToken(token)
     }
 
     override fun registerTimetable(token: String, timetable: Timetable) {
-        try {
-            kiwiService.registerTimetable(token, timetable).execute()
-        } catch (e: IOException) {
-            throw e
-        }
+        kiwiService.registerTimetable(token, timetable).execute()
     }
 
     override fun getTimetable(token: String): Timetable? {
-        return try {
-            kiwiService.getTimetable(token).execute().let {
-                if (it.isSuccessful) {
-                    it.body()
-                } else {
-                    throw NetworkErrorException("Connection Error")
-                }
+        return kiwiService.getTimetable(token).execute().let {
+            if (it.isSuccessful) {
+                it.body()
             }
-        } catch (e: IOException) {
-            throw e
+            null
         }
     }
 
     override fun registerTasks(token: String, task: Tasks) {
-        try {
-            kiwiService.registerTasks(token, task).execute()
-        } catch (e: IOException) {
-            throw e
-        }
+        kiwiService.registerTasks(token, task).execute()
     }
 
     override fun getTasks(token: String): Tasks? {
-        return try {
-            kiwiService.getTasks(token).execute().let {
-                if (it.isSuccessful) {
-                    it.body()
-                } else {
-                    throw NetworkErrorException("Connection Error")
-                }
+        return kiwiService.getTasks(token).execute().let {
+            if (it.isSuccessful) {
+                it.body()
             }
-        } catch (e: IOException) {
-            throw e
+            null
         }
     }
 

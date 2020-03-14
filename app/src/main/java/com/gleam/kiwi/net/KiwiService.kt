@@ -16,13 +16,13 @@ interface KiwiServiceInterFace {
     fun signUp(@Body user: User): Call<Unit>
 
     @DELETE("users")
-    fun deleteUser(@Body user: User): Call<Unit>
+    fun revokeUser(@Body user: User): Call<Unit>
 
     @POST("tokens")
     fun getNewToken(@Body user: User): Call<String?>
 
     @DELETE("tokens")
-    fun deleteToken(@Header("token") token: String): Call<Unit>
+    fun revokeToken(@Header("token") token: String): Call<Unit>
 
     @POST("timetables")
     fun registerTimetable(@Header("token") token: String, @Body timetable: Timetable): Call<Unit>
@@ -39,19 +39,19 @@ interface KiwiServiceInterFace {
 }
 
 class KiwiService {
+    private val APIURL = ""
     lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
 
     fun create(serviceClass: Class<KiwiServiceInterFace>): KiwiServiceInterFace {
-        val baseUrl = "http://10.0.2.2:3000"
         val gson = GsonBuilder()
             .serializeNulls()
             .create()
 
         retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl(baseUrl)
+            .baseUrl(APIURL)
             .client(httpBuilder.build())
             .build()
 
