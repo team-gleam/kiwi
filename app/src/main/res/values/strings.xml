@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">kiwi</string>
+    <string name="sign_in_text">Sign in</string>
+    <string name="sign_up_text">Sign up</string>
+    <string name="username">UserName</string>
+    <string name="password">Password</string>
 </resources>
