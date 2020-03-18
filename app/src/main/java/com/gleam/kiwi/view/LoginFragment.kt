@@ -1,13 +1,11 @@
 package com.gleam.kiwi.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import com.gleam.kiwi.R
 import com.gleam.kiwi.databinding.LoginFragmentBinding
 import com.gleam.kiwi.viewModel.LoginViewModel
@@ -24,6 +22,7 @@ class LoginFragment : Fragment() {
         loginFragmentBinding =
             DataBindingUtil.inflate(inflater, R.layout.login_fragment, container, false)
         viewModel = LoginViewModel()
+
         loginFragmentBinding.apply {
             signIn.setOnClickListener {
                 viewModel.signIn(
@@ -40,12 +39,6 @@ class LoginFragment : Fragment() {
         }
 
         return loginFragmentBinding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

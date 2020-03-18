@@ -21,9 +21,6 @@ interface KiwiServiceInterFace {
     @POST("tokens")
     fun getNewToken(@Body user: User): Call<String?>
 
-    @DELETE("tokens")
-    fun revokeToken(@Header("token") token: String): Call<Unit>
-
     @POST("timetables")
     fun registerTimetable(@Header("token") token: String, @Body timetable: Timetable): Call<Unit>
 
@@ -39,7 +36,7 @@ interface KiwiServiceInterFace {
 }
 
 class KiwiService {
-    private val API_URL = "https://gleam.works"
+    private val API_URL = "http://10.0.2.2:3000"
     lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
