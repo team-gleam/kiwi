@@ -42,7 +42,6 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
         }
     }
 
-
     override suspend fun registerTimetable(token: String, timetable: Timetable) {
         withContext(Dispatchers.IO) {
             kiwiService.registerTimetable(token, timetable).execute()
