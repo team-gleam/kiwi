@@ -1,6 +1,5 @@
 package com.gleam.kiwi.net
 
-import android.util.Log
 import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User

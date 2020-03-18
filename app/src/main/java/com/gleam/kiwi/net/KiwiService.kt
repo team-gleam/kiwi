@@ -32,11 +32,10 @@ interface KiwiServiceInterFace {
 
     @GET("tasks")
     fun getTasks(@Header("token") token: String): Call<Tasks?>
-
 }
 
 class KiwiService {
-    private val API_URL = "http://10.0.2.2:3000"
+    private val API_URL = "https://gleam.works:10080"
     lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
