@@ -67,11 +67,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
 
     override suspend fun getTasks(token: String): Tasks? {
         return withContext(Dispatchers.IO) {
-            kiwiService.getTasks(token).execute().let {
-                if (it.isSuccessful) {
-                    it.body()
-                }
-                null
+            kiwiService.getTasks(token).execute().takeIf { it.isSuccessful() }.let { it.body() }
             }
         }
     }
