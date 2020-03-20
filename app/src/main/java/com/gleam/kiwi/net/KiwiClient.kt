@@ -30,9 +30,9 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
 
     override suspend fun signIn(user: User) {
         withContext(Dispatchers.IO) {
-            kiwiService.getNewToken(user).execute().let {
-                if (it.isSuccessful) token = it.body()
-            }
+            token = kiwiService.getNewToken(user).execute().takeIf {
+                it.isSuccessful
+            }?.body()
         }
     }
 
@@ -50,14 +50,10 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
 
     override suspend fun getTimetable(token: String): Timetable? {
         return withContext(Dispatchers.IO) {
-            kiwiService.getTimetable(token).execute().let {
-                if (it.isSuccessful) {
-                    it.body()
-                }
-                null
-            }
+            kiwiService.getTimetable(token).execute().takeIf { it.isSuccessful }?.body()
         }
     }
+
 
     override suspend fun registerTasks(token: String, task: Tasks) {
         withContext(Dispatchers.IO) {
@@ -67,9 +63,8 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
 
     override suspend fun getTasks(token: String): Tasks? {
         return withContext(Dispatchers.IO) {
-            kiwiService.getTasks(token).execute().takeIf { it.isSuccessful() }?.let { it.body() }
-            }
+            kiwiService.getTasks(token).execute().takeIf { it.isSuccessful }?.body()
         }
     }
-
 }
+
