@@ -21,9 +21,6 @@ interface KiwiServiceInterFace {
     @POST("tokens")
     fun getNewToken(@Body user: User): Call<String?>
 
-    @DELETE("tokens")
-    fun revokeToken(@Header("token") token: String): Call<Unit>
-
     @POST("timetables")
     fun registerTimetable(@Header("token") token: String, @Body timetable: Timetable): Call<Unit>
 
@@ -35,11 +32,10 @@ interface KiwiServiceInterFace {
 
     @GET("tasks")
     fun getTasks(@Header("token") token: String): Call<Tasks?>
-
 }
 
 class KiwiService {
-    private val API_URL = ""
+    private val API_URL = "https://gleam.works:10080"
     lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
@@ -51,7 +47,7 @@ class KiwiService {
 
         retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl(APIURL)
+            .baseUrl(API_URL)
             .client(httpBuilder.build())
             .build()
 

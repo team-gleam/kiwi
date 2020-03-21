@@ -3,67 +3,72 @@ package com.gleam.kiwi.net
 import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 interface KiwiClientInterface {
-    fun signUp(user: User)
-    fun revokeUser(user: User)
+    suspend fun signUp(user: User)
+    suspend fun signIn(user: User)
+    suspend fun revokeUser(user: User)
 
-    fun getNewToken(user: User): String?
-    fun revokeToken(token: String)
+    suspend fun registerTimetable(token: String, timetable: Timetable)
+    suspend fun getTimetable(token: String): Timetable?
 
-    fun registerTimetable(token: String, timetable: Timetable)
-    fun getTimetable(token: String): Timetable?
-
-    fun registerTasks(token: String, task: Tasks)
-    fun getTasks(token: String): Tasks?
+    suspend fun registerTasks(token: String, task: Tasks)
+    suspend fun getTasks(token: String): Tasks?
 }
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
     KiwiClientInterface {
-    override fun signUp(user: User) {
-        kiwiService.signUp(user).execute()
-    }
+    private var token: String? = null
 
-    override fun revokeUser(user: User) {
-        kiwiService.revokeUser(user).execute()
-    }
-
-    override fun getNewToken(user: User): String? {
-        return kiwiService.getNewToken(user).execute().let {
-            if (it.isSuccessful) {
-                it.body()
-            }
-            null
+    override suspend fun signUp(user: User) {
+        withContext(Dispatchers.IO) {
+            kiwiService.signUp(user).execute()
         }
     }
 
-    override fun revokeToken(token: String) {
-        kiwiService.revokeToken(token)
-    }
-
-    override fun registerTimetable(token: String, timetable: Timetable) {
-        kiwiService.registerTimetable(token, timetable).execute()
-    }
-
-    override fun getTimetable(token: String): Timetable? {
-        return kiwiService.getTimetable(token).execute().let {
-            if (it.isSuccessful) {
-                it.body()
+    override suspend fun signIn(user: User) {
+        withContext(Dispatchers.IO) {
+            kiwiService.getNewToken(user).execute().let {
+                if (it.isSuccessful) token = it.body()
             }
-            null
         }
     }
 
-    override fun registerTasks(token: String, task: Tasks) {
-        kiwiService.registerTasks(token, task).execute()
+    override suspend fun revokeUser(user: User) {
+        withContext(Dispatchers.IO) {
+            kiwiService.revokeUser(user).execute()
+        }
     }
 
-    override fun getTasks(token: String): Tasks? {
-        return kiwiService.getTasks(token).execute().let {
-            if (it.isSuccessful) {
-                it.body()
+    override suspend fun registerTimetable(token: String, timetable: Timetable) {
+        withContext(Dispatchers.IO) {
+            kiwiService.registerTimetable(token, timetable).execute()
+        }
+    }
+
+    override suspend fun getTimetable(token: String): Timetable? {
+        return withContext(Dispatchers.IO) {
+            kiwiService.getTimetable(token).execute().let {
+                if (it.isSuccessful) {
+                    it.body()
+                }
+                null
             }
-            null
+        }
+    }
+
+    override suspend fun registerTasks(token: String, task: Tasks) {
+        withContext(Dispatchers.IO) {
+            kiwiService.registerTasks(token, task).execute()
+        }
+    }
+
+    override suspend fun getTasks(token: String): Tasks? {
+        return withContext(Dispatchers.IO) {
+            kiwiService.getTasks(token).execute().takeIf { it.isSuccessful() }?.let { it.body() }
+            }
         }
     }
 
