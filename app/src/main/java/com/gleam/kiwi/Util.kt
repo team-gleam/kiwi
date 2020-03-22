@@ -1,8 +1,10 @@
 package com.gleam.kiwi
 
 import android.content.Context
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import org.threeten.bp.DayOfWeek
 

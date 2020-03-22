@@ -8,4 +8,7 @@
     <color name="white_light">#4DFFFFFF</color>
     <color name="calendar_bg">#5b5a6d</color>
     <color name="light_bg">#444351</color>
+    <color name="kiwi_green">#66bb6a</color>
+    <color name="kiwi_yellow">#fff59d</color>
+    <color name="kiwi_brawn">#cc9900</color>
 </resources>

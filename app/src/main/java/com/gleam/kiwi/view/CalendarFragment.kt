@@ -17,6 +17,7 @@ import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import kotlinx.android.synthetic.main.calendar_base.*
+import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_fragment.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
@@ -42,10 +43,9 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val currentMonth = YearMonth.now()
-        val startMonth = currentMonth.minusMonths(12)
-        val endMonth = currentMonth.plusMonths(12)
+        val oldestMonth = currentMonth.minusMonths(12)
+        val newestMonth = currentMonth.plusMonths(12)
         val daysOfWeek = daysOfWeek()
         dayofweek.children.forEachIndexed { index, v ->
             (v as TextView).apply {
@@ -56,7 +56,7 @@ class CalendarFragment : Fragment() {
         }
 
         calendar.apply {
-            setup(startMonth, endMonth, daysOfWeek.first())
+            setup(oldestMonth, newestMonth, daysOfWeek.first())
             scrollToMonth(currentMonth)
             monthScrollListener = {
                 yearText.text = it.yearMonth.year.toString()
@@ -75,7 +75,23 @@ class CalendarFragment : Fragment() {
                                     setBackgroundResource(R.drawable.today_bg)
                                 }
                                 else -> {
-                                    setTextColorRes(R.color.white)
+                                    when (Random().nextInt(4)) {
+                                        0 -> {
+                                            setTextColorRes(R.color.white)
+                                            container.view.TaskNotifier.setBackgroundResource(R.drawable.notification_yellow)
+                                        }
+                                        1 -> {
+                                            setTextColorRes(R.color.white)
+                                            container.view.TaskNotifier.setBackgroundResource(R.drawable.notification_green)
+                                        }
+                                        2 -> {
+                                            setTextColorRes(R.color.white)
+                                            container.view.TaskNotifier.setBackgroundResource(R.drawable.notification_brawn)
+                                        }
+                                        else -> {
+                                            setTextColorRes(R.color.white)
+                                        }
+                                    }
                                 }
                             }
                         } else {
