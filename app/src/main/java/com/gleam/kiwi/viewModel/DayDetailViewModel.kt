@@ -43,10 +43,17 @@ class DayDetailViewModel() : ViewModel() {
 
     private fun createTestData(): Tasks{
         var taskList = mutableListOf<Task>()
-        for (i in 1..20) {
+        for (i in 1..10) {
             val task: Task = Task(
                 "2020/03/21",
                 "hogehgoe"
+            )
+            taskList.add(task)
+        }
+        for (i in 1..10) {
+            val task: Task = Task(
+                "2020/03/30",
+                "hoge"
             )
             taskList.add(task)
         }
