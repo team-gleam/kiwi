@@ -3,11 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/dayDetailFragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.gleam.kiwi.view.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" />
+    <fragment
+        android:id="@+id/dayDetailFragment"
+        android:name="com.gleam.kiwi.view.DayDetailFragment"
+        android:label="day_detail_fragment"
+        tools:layout="@layout/day_detail_fragment" />
 </navigation>

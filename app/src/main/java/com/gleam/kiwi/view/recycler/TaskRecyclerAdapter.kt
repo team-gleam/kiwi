@@ -33,6 +33,7 @@ class TaskRecyclerAdapter(
 
     fun setTasks(tasks: List<Task>){
         this.taskList = tasks
+        Log.i("Adapter", this.taskList.toString())
         notifyDataSetChanged()
     }
 
