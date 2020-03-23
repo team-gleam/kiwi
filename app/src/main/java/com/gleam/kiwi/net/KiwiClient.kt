@@ -11,11 +11,12 @@ interface KiwiClientInterface {
     suspend fun signIn(user: User)
     suspend fun revokeUser(user: User)
 
-    suspend fun registerTimetable(token: String, timetable: Timetable)
-    suspend fun getTimetable(token: String): Timetable?
+    suspend fun registerTimetable(timetable: Timetable)
+    suspend fun getTimetable(): Timetable?
 
-    suspend fun registerTasks(token: String, task: Tasks)
-    suspend fun getTasks(token: String): Tasks?
+    suspend fun registerTasks(task: Tasks)
+    suspend fun getTasks(): Tasks?
+    suspend fun removeTask(id: Int)
 }
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
@@ -40,27 +41,33 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         }
     }
 
-    override suspend fun registerTimetable(token: String, timetable: Timetable) {
+    override suspend fun registerTimetable(timetable: Timetable) {
         withContext(Dispatchers.IO) {
             kiwiService.registerTimetable(token, timetable).execute()
         }
     }
 
-    override suspend fun getTimetable(token: String): Timetable? {
+    override suspend fun getTimetable(): Timetable? {
         return withContext(Dispatchers.IO) {
             kiwiService.getTimetable(token).execute().takeIf { it.isSuccessful }?.body()
         }
     }
 
-    override suspend fun registerTasks(token: String, task: Tasks) {
+    override suspend fun registerTasks(task: Tasks) {
         withContext(Dispatchers.IO) {
             kiwiService.registerTasks(token, task).execute()
         }
     }
 
-    override suspend fun getTasks(token: String): Tasks? {
+    override suspend fun getTasks(): Tasks? {
         return withContext(Dispatchers.IO) {
             kiwiService.getTasks(token).execute().takeIf { it.isSuccessful }?.body()
+        }
+    }
+
+    override suspend fun removeTask(id: Int) {
+        return withContext(Dispatchers.IO) {
+            kiwiService.removeTask(token, id).execute()
         }
     }
 }
