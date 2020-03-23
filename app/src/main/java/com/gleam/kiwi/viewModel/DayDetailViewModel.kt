@@ -11,8 +11,7 @@ import com.gleam.kiwi.net.KiwiService
 import com.gleam.kiwi.net.KiwiServiceInterFace
 import kotlinx.coroutines.runBlocking
 
-class DayDetailViewModel() : ViewModel() {
-    private val token = "placeholder"
+class DaytitleViewModel() : ViewModel() {
 
    // var taskList = MutableLiveData<List<Task>>()
     private val _taskList: MutableLiveData<List<Task>>? = MutableLiveData()
@@ -22,7 +21,7 @@ class DayDetailViewModel() : ViewModel() {
         }
 
     init {
-        Log.i("DayDetailViewModel","DayDetailViewModel Initialize!!")
+        Log.i("DaytitleViewModel","DaytitleViewModel Initialize!!")
         loadTaskList()
     }
 
@@ -31,7 +30,7 @@ class DayDetailViewModel() : ViewModel() {
            // val client = KiwiClient(KiwiService().create(KiwiServiceInterFace::class.java))
            // val tasks: Tasks? = client.getTasks(token)
             val tasks: Tasks? = createTestData()
-            Log.i("DayDetailViewModel", tasks.toString())
+            Log.i("DaytitleViewModel", tasks.toString())
             _taskList?.postValue(tasks?.tasks)
         }
     }
@@ -45,15 +44,19 @@ class DayDetailViewModel() : ViewModel() {
         var taskList = mutableListOf<Task>()
         for (i in 1..10) {
             val task: Task = Task(
+                1,
                 "2020/03/21",
-                "hogehgoe"
+                "hogehgoe",
+                "#FFFFFF"
             )
             taskList.add(task)
         }
         for (i in 1..10) {
             val task: Task = Task(
+                2,
                 "2020/03/30",
-                "hoge"
+                "hoge",
+                "#000000"
             )
             taskList.add(task)
         }

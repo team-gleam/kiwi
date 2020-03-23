@@ -8,5 +8,5 @@ import kotlinx.android.synthetic.main.task_list_cell.view.*
 class TaskRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
     val dateTextView: TextView = view.date
-    val detailTextView: TextView = view.detail
+    val titleTextView: TextView = view.title
 }

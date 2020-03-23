@@ -24,7 +24,7 @@ class TaskRecyclerAdapter(
     override fun onBindViewHolder(holder: TaskRecyclerViewHolder, position: Int){
         holder.apply {
             dateTextView.text = taskList[position].date
-            detailTextView.text = taskList[position].detail
+            titleTextView.text = taskList[position].title
         }
     }
 
