@@ -11,16 +11,15 @@ interface KiwiClientInterface {
     suspend fun signIn(user: User)
     suspend fun revokeUser(user: User)
 
-    suspend fun registerTimetable(token: String, timetable: Timetable)
-    suspend fun getTimetable(token: String): Timetable?
+    suspend fun registerTimetable(timetable: Timetable)
+    suspend fun getTimetable(): Timetable?
 
-    suspend fun registerTasks(token: String, task: Tasks)
-    suspend fun getTasks(token: String): Tasks?
+    suspend fun registerTasks(task: Tasks)
+    suspend fun getTasks(): Tasks?
 }
 
-class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
-    KiwiClientInterface {
-    private var token: String? = null
+class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
+    private lateinit var token: String
 
     override suspend fun signUp(user: User) {
         withContext(Dispatchers.IO) {
@@ -30,9 +29,8 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
 
     override suspend fun signIn(user: User) {
         withContext(Dispatchers.IO) {
-            token = kiwiService.getNewToken(user).execute().takeIf {
-                it.isSuccessful
-            }?.body()
+            token = kiwiService.getNewToken(user).execute().takeIf { it.isSuccessful }?.body()
+                ?: return@withContext
         }
     }
 
@@ -42,29 +40,27 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) :
         }
     }
 
-    override suspend fun registerTimetable(token: String, timetable: Timetable) {
+    override suspend fun registerTimetable(timetable: Timetable) {
         withContext(Dispatchers.IO) {
             kiwiService.registerTimetable(token, timetable).execute()
         }
     }
 
-    override suspend fun getTimetable(token: String): Timetable? {
+    override suspend fun getTimetable(): Timetable? {
         return withContext(Dispatchers.IO) {
             kiwiService.getTimetable(token).execute().takeIf { it.isSuccessful }?.body()
         }
     }
 
-
-    override suspend fun registerTasks(token: String, task: Tasks) {
+    override suspend fun registerTasks(task: Tasks) {
         withContext(Dispatchers.IO) {
             kiwiService.registerTasks(token, task).execute()
         }
     }
 
-    override suspend fun getTasks(token: String): Tasks? {
+    override suspend fun getTasks(): Tasks? {
         return withContext(Dispatchers.IO) {
             kiwiService.getTasks(token).execute().takeIf { it.isSuccessful }?.body()
         }
     }
 }
-

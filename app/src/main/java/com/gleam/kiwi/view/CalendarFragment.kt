@@ -1,6 +1,7 @@
 package com.gleam.kiwi.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,10 +44,14 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        viewModel = CalendarViewModel()
+//        val dayContainTask = viewModel.getDaysContainTask()
         val currentMonth = YearMonth.now()
         val oldestMonth = currentMonth.minusMonths(12)
         val newestMonth = currentMonth.plusMonths(12)
         val daysOfWeek = daysOfWeek()
+
+
         dayofweek.children.forEachIndexed { index, v ->
             (v as TextView).apply {
                 text = daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
@@ -62,44 +67,33 @@ class CalendarFragment : Fragment() {
                 yearText.text = it.yearMonth.year.toString()
                 monthText.text = monthFormatter.format(it.yearMonth)
             }
+
             dayBinder = object : DayBinder<CalendarContainer> {
                 override fun create(view: View) = CalendarContainer(view)
                 override fun bind(container: CalendarContainer, day: CalendarDay) {
                     container.day = day
-                    container.textView.apply {
-                        text = day.date.dayOfMonth.toString()
+                    container.apply {
+                        textView.text = day.date.dayOfMonth.toString()
+                        textView.setTextColorRes(R.color.white)
                         if (day.owner == DayOwner.THIS_MONTH) {
-                            when (today) {
-                                day.date -> {
-                                    setTextColorRes(R.color.white)
-                                    setBackgroundResource(R.drawable.today_bg)
-                                }
-                                else -> {
-                                    when (Random().nextInt(4)) {
-                                        0 -> {
-                                            setTextColorRes(R.color.white)
-                                            container.view.TaskNotifier.setBackgroundResource(R.drawable.notification_yellow)
-                                        }
-                                        1 -> {
-                                            setTextColorRes(R.color.white)
-                                            container.view.TaskNotifier.setBackgroundResource(R.drawable.notification_green)
-                                        }
-                                        2 -> {
-                                            setTextColorRes(R.color.white)
-                                            container.view.TaskNotifier.setBackgroundResource(R.drawable.notification_brawn)
-                                        }
-                                        else -> {
-                                            setTextColorRes(R.color.white)
-                                        }
-                                    }
-                                }
+                            if (day.date == today) {
+                                textView.setBackgroundResource(R.drawable.today_bg)
                             }
+//                        dayContainTask[day.date]?.let{
+//                            when(it) {
+//                                "yellow" -> view.TaskNotifier.setBackgroundResource(R.drawable.notification_yellow)
+//                                "green" -> view.TaskNotifier.setBackgroundResource(R.drawable.notification_green)
+//                                "brawn" -> view.TaskNotifier.setBackgroundResource(R.drawable.notification_brawn)
+//                            }
+//                        }
+
                         } else {
-                            setTextColorRes(R.color.white_light)
+                            textView.setTextColorRes(R.color.white_light)
                         }
                     }
                 }
             }
+
 
         }
 
