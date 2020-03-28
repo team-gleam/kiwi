@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/DayText"
+        android:id="@+id/day_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
@@ -17,7 +17,7 @@
         tools:text="22" />
 
     <View
-        android:id="@+id/TaskNotifier"
+        android:id="@+id/notification_mark"
         android:layout_width="5dp"
         android:layout_height="5dp"
         android:layout_margin="5dp"

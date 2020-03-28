@@ -1,11 +1,11 @@
 package com.gleam.kiwi.net
 
+import com.gleam.kiwi.model.Task
 import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -13,30 +13,33 @@ import retrofit2.http.*
 
 interface KiwiServiceInterFace {
     @POST("users")
-    fun signUp(@Body user: User): Call<Unit>
+    suspend fun signUp(@Body user: User)
 
     @DELETE("users")
-    fun revokeUser(@Body user: User): Call<Unit>
+    suspend fun revokeUser(@Body user: User)
 
     @POST("tokens")
-    fun getNewToken(@Body user: User): Call<String?>
+    suspend fun getNewToken(@Body user: User): String?
 
     @POST("timetables")
-    fun registerTimetable(@Header("token") token: String, @Body timetable: Timetable): Call<Unit>
+    suspend fun registerTimetable(@Header("token") token: String, @Body timetable: Timetable)
 
     @GET("timetables")
-    fun getTimetable(@Header("token") token: String): Call<Timetable?>
+    suspend fun getTimetable(@Header("token") token: String): Timetable?
 
     @POST("tasks")
-    fun registerTasks(@Header("token") token: String, @Body task: Tasks): Call<Unit>
+    suspend fun registerTask(@Header("token") token: String, @Body task: Task)
 
     @GET("tasks")
-    fun getTasks(@Header("token") token: String): Call<Tasks?>
+    suspend fun getTasks(@Header("token") token: String): Tasks?
+
+    @DELETE("tasks")
+    suspend fun removeTask(@Header("token") token: String, @Body id: Int)
 }
 
 class KiwiService {
     private val API_URL = "https://gleam.works:10080"
-    lateinit var retrofit: Retrofit
+    private lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
 

@@ -1,19 +1,16 @@
 package com.gleam.kiwi.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.gleam.kiwi.R
-import com.gleam.kiwi.databinding.CalendarFragmentBinding
 import com.gleam.kiwi.daysOfWeek
 import com.gleam.kiwi.setTextColorRes
-import com.gleam.kiwi.viewModel.CalendarViewModel
+import com.gleam.kiwi.viewmodel.CalendarViewModel
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
@@ -28,7 +25,6 @@ import java.util.*
 
 class CalendarFragment : Fragment() {
     private lateinit var viewModel: CalendarViewModel
-    private lateinit var calendarFragmentBinding: CalendarFragmentBinding
     private val today = LocalDate.now()
     private val monthFormatter = DateTimeFormatter.ofPattern("MMMM")
 
@@ -37,22 +33,19 @@ class CalendarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        calendarFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.calendar_fragment, container, false)
-        return calendarFragmentBinding.root
+        return inflater.inflate(R.layout.calendar_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewModel = CalendarViewModel()
-//        val dayContainTask = viewModel.getDaysContainTask()
+        viewModel = CalendarViewModel()
+        val dayContainTask = viewModel.getDaysContainTask()
         val currentMonth = YearMonth.now()
         val oldestMonth = currentMonth.minusMonths(12)
         val newestMonth = currentMonth.plusMonths(12)
         val daysOfWeek = daysOfWeek()
 
-
-        dayofweek.children.forEachIndexed { index, v ->
+        day_of_week.children.forEachIndexed { index, v ->
             (v as TextView).apply {
                 text = daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
                     .toUpperCase(Locale.ENGLISH)
@@ -64,38 +57,31 @@ class CalendarFragment : Fragment() {
             setup(oldestMonth, newestMonth, daysOfWeek.first())
             scrollToMonth(currentMonth)
             monthScrollListener = {
-                yearText.text = it.yearMonth.year.toString()
-                monthText.text = monthFormatter.format(it.yearMonth)
+                year_text.text = it.yearMonth.year.toString()
+                month_text.text = monthFormatter.format(it.yearMonth)
             }
 
             dayBinder = object : DayBinder<CalendarContainer> {
                 override fun create(view: View) = CalendarContainer(view)
                 override fun bind(container: CalendarContainer, day: CalendarDay) {
                     container.day = day
-                    container.apply {
-                        textView.text = day.date.dayOfMonth.toString()
-                        textView.setTextColorRes(R.color.white)
+                    container.textView.apply {
+                        text = day.date.dayOfMonth.toString()
+                        setTextColorRes(R.color.white)
                         if (day.owner == DayOwner.THIS_MONTH) {
                             if (day.date == today) {
-                                textView.setBackgroundResource(R.drawable.today_bg)
+                                setBackgroundResource(R.drawable.today_bg)
                             }
-//                        dayContainTask[day.date]?.let{
-//                            when(it) {
-//                                "yellow" -> view.TaskNotifier.setBackgroundResource(R.drawable.notification_yellow)
-//                                "green" -> view.TaskNotifier.setBackgroundResource(R.drawable.notification_green)
-//                                "brawn" -> view.TaskNotifier.setBackgroundResource(R.drawable.notification_brawn)
-//                            }
-//                        }
-
                         } else {
-                            textView.setTextColorRes(R.color.white_light)
+                            setTextColorRes(R.color.white_light)
                         }
+                    }
+                    if (dayContainTask.contains(day.date.toString())) {
+                        container.view.notification_mark.setBackgroundResource(R.drawable.notification_yellow)
                     }
                 }
             }
 
-
         }
-
     }
 }

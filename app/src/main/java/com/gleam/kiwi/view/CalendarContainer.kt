@@ -1,6 +1,5 @@
 package com.gleam.kiwi.view
 
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -10,7 +9,7 @@ import kotlinx.android.synthetic.main.calendar_day.view.*
 
 class CalendarContainer(view: View) : ViewContainer(view) {
     lateinit var day: CalendarDay
-    val textView: TextView = view.DayText
+    val textView: TextView = view.day_text
 
     init {
         view.setOnClickListener {
