@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.gleam.kiwi.R
 import com.gleam.kiwi.daysOfWeek
 import com.gleam.kiwi.setTextColorRes
@@ -39,16 +40,12 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = CalendarViewModel()
+
         var dayContainTask: List<String> = listOf()
-        viewModel.daysContainTask.observe(viewLifecycleOwner, androidx.lifecycle.Observer { t ->
-            dayContainTask = t
-            t.forEach { x ->
-                calendar.notifyDateChanged(
-                    LocalDate.parse(
-                        x,
-                        DateTimeFormatter.ISO_DATE
-                    )
-                )
+        viewModel.daysContainTask.observe(viewLifecycleOwner, Observer { taskList: List<String>? ->
+            if (taskList != null) dayContainTask = taskList // TODO: remove
+            taskList?.forEach { task ->
+                calendar.notifyDateChanged(LocalDate.parse(task, DateTimeFormatter.ISO_DATE))
             }
         })
 
@@ -88,6 +85,7 @@ class CalendarFragment : Fragment() {
                             setTextColorRes(R.color.white_light)
                         }
                     }
+
                     if (dayContainTask.contains(day.date.toString())) {
                         container.view.notification_mark.setBackgroundResource(R.drawable.notification_yellow)
                     }
