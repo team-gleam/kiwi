@@ -1,4 +1,4 @@
-package com.gleam.kiwi.viewModel
+package com.gleam.kiwi.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
