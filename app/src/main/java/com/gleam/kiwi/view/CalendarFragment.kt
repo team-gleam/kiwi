@@ -41,9 +41,7 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = CalendarViewModel()
 
-        var dayContainTask: List<String> = listOf()
         viewModel.daysContainTask.observe(viewLifecycleOwner, Observer { taskList: List<String>? ->
-            if (taskList != null) dayContainTask = taskList // TODO: remove
             taskList?.forEach { task ->
                 calendar.notifyDateChanged(LocalDate.parse(task, DateTimeFormatter.ISO_DATE))
             }
@@ -73,12 +71,14 @@ class CalendarFragment : Fragment() {
             dayBinder = object : DayBinder<CalendarContainer> {
                 override fun create(view: View) = CalendarContainer(view)
                 override fun bind(container: CalendarContainer, day: CalendarDay) {
+                    val date = day.date
+
                     container.day = day
                     container.textView.apply {
-                        text = day.date.dayOfMonth.toString()
+                        text = date.dayOfMonth.toString()
                         setTextColorRes(R.color.white)
                         if (day.owner == DayOwner.THIS_MONTH) {
-                            if (day.date == today) {
+                            if (date == today) {
                                 setBackgroundResource(R.drawable.today_bg)
                             }
                         } else {
@@ -86,7 +86,9 @@ class CalendarFragment : Fragment() {
                         }
                     }
 
-                    if (dayContainTask.contains(day.date.toString())) {
+                    val dateText = date.toString()
+                    val daysContainTasks = viewModel.daysContainTask.value ?: return
+                    if (dateText in daysContainTasks) {
                         container.view.notification_mark.setBackgroundResource(R.drawable.notification_yellow)
                     }
                 }
