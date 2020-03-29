@@ -3,11 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-<<<<<<< HEAD
     app:startDestination="@id/dayDetailFragment">
-=======
-    app:startDestination="@id/calendarFragment">
->>>>>>> 7c318a074487563a1e06f889a285a01e7941d81d
 
     <fragment
         android:id="@+id/loginFragment"
@@ -15,12 +11,6 @@
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" />
     <fragment
-<<<<<<< HEAD
-        android:id="@+id/dayDetailFragment"
-        android:name="com.gleam.kiwi.view.DayDetailFragment"
-        android:label="day_detail_fragment"
-        tools:layout="@layout/day_detail_fragment" />
-=======
         android:id="@+id/calendarFragment"
         android:name="com.gleam.kiwi.view.CalendarFragment"
         android:label="calendar_fragment"
@@ -32,5 +22,9 @@
             android:id="@+id/action_calendarFragment_to_loginFragment2"
             app:destination="@id/loginFragment" />
     </fragment>
->>>>>>> 7c318a074487563a1e06f889a285a01e7941d81d
+    <fragment
+        android:id="@+id/dayDetailFragment"
+        android:name="com.gleam.kiwi.view.DayDetailFragment"
+        android:label="day_detail_fragment"
+        tools:layout="@layout/day_detail_fragment" />
 </navigation>
