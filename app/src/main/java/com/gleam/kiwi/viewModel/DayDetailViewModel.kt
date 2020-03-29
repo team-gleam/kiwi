@@ -15,12 +15,13 @@ import java.time.LocalDate
 
 class DayDetailViewModel(date: String) : ViewModel() {
 
-   // var taskList = MutableLiveData<List<Task>>()
+    private lateinit var client: KiwiClient
     private val _taskList: MutableLiveData<List<Task>>? = MutableLiveData()
     val taskList: LiveData<List<Task>>?
         get() {
             return _taskList
         }
+
 
     init {
         Log.i("DayDetailViewModel","DayDetailViewModel Initialize!!")
@@ -29,17 +30,17 @@ class DayDetailViewModel(date: String) : ViewModel() {
 
     private fun loadTaskList(date: String) {
         runBlocking {
-           // val client = KiwiClient(KiwiService().create(KiwiServiceInterFace::class.java))
-           // val tasks: Tasks? = client.getTasks(token)
-            val tasks: Tasks? = createTestData()
+            client = KiwiClient(KiwiService().create(KiwiServiceInterFace::class.java))
+            val tasks: Tasks? = client.getTasks()
+         //   val tasks: Tasks? = createTestData()
             Log.i("DayDetailViewModel", tasks.toString())
-            _taskList?.postValue(getDayTasks(tasks?.tasks, date))
+            _taskList?.postValue(getDateTasks(tasks?.tasks, date))
             //_taskList?.postValue(tasks?.tasks)
         }
     }
 
     // 20XX-10-10
-    fun getDayTasks(tasks: List<Task>?, day: String): List<Task>? {
+    private fun getDateTasks(tasks: List<Task>?, day: String): List<Task>? {
         return tasks?.filter { it.date == day }
     }
 
@@ -47,7 +48,19 @@ class DayDetailViewModel(date: String) : ViewModel() {
     fun registerTask(task: String){
         //TODO: Use KiwiClient instance
         val date = LocalDate.now()
-        //client.registerTasks(Task(-1,date.toString(),task,"#FFFFFF"))
+        runBlocking {
+            client.registerTask(Task(-1,date.toString(),task))
+        }
+    }
+
+    private fun getTask(index: Int): Task{
+        return taskList?.value!![index]
+    }
+
+    fun deleteTask(index: Int){
+        runBlocking {
+            client.removeTask(getTask(index).id)
+        }
     }
 
     fun onItemClick(view: View, position: Int){
@@ -61,8 +74,7 @@ class DayDetailViewModel(date: String) : ViewModel() {
             val task: Task = Task(
                 1,
                 "2020/03/21",
-                "hogehgoe",
-                "#FFFFFF"
+                "hogehgoe"
             )
             taskList.add(task)
         }
@@ -70,8 +82,7 @@ class DayDetailViewModel(date: String) : ViewModel() {
             val task: Task = Task(
                 2,
                 "2020/03/30",
-                "hoge",
-                "#000000"
+                "hoge"
             )
             taskList.add(task)
         }

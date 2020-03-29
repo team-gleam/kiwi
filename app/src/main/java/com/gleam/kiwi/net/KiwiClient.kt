@@ -49,12 +49,6 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
     }
 
     override suspend fun removeTask(id: Int) {
-<<<<<<< HEAD
-        withContext(Dispatchers.IO) {
-            kiwiService.removeTask(token, id).execute()
-        }
-=======
         kiwiService.removeTask(token, id)
->>>>>>> 7c318a074487563a1e06f889a285a01e7941d81d
     }
 }

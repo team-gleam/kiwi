@@ -67,9 +67,10 @@ class DayDetailFragment : Fragment() {
             dialog, id ->
             Log.i("dialog", "delete clicked")
             //TODO: call viewModel delete method
+            dayDetailViewModel.deleteTask(position)
         }
         dialog.show(childFragmentManager, "deleteTask")
-        dayDetailViewModel.onItemClick(click, position)
+     //   dayDetailViewModel.onItemClick(click, position)
     }
 
 
