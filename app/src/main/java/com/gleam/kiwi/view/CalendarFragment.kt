@@ -39,7 +39,19 @@ class CalendarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = CalendarViewModel()
-        val dayContainTask = viewModel.getDaysContainTask()
+        var dayContainTask: List<String> = listOf()
+        viewModel.daysContainTask.observe(viewLifecycleOwner, androidx.lifecycle.Observer { t ->
+            dayContainTask = t
+            t.forEach { x ->
+                calendar.notifyDateChanged(
+                    LocalDate.parse(
+                        x,
+                        DateTimeFormatter.ISO_DATE
+                    )
+                )
+            }
+        })
+
         val currentMonth = YearMonth.now()
         val oldestMonth = currentMonth.minusMonths(12)
         val newestMonth = currentMonth.plusMonths(12)
@@ -81,7 +93,6 @@ class CalendarFragment : Fragment() {
                     }
                 }
             }
-
         }
     }
 }

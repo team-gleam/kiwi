@@ -20,7 +20,6 @@ interface KiwiClientInterface {
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
     private lateinit var token: String
-
     override suspend fun signUp(user: User) {
         kiwiService.signUp(user)
     }
