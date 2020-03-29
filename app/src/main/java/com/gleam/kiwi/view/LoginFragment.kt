@@ -8,7 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.gleam.kiwi.R
 import com.gleam.kiwi.databinding.LoginFragmentBinding
-import com.gleam.kiwi.viewModel.LoginViewModel
+import com.gleam.kiwi.viewmodel.LoginViewModel
+import kotlinx.android.synthetic.main.login_fragment.*
 
 class LoginFragment : Fragment() {
 
@@ -26,14 +27,14 @@ class LoginFragment : Fragment() {
         loginFragmentBinding.apply {
             signIn.setOnClickListener {
                 viewModel.signIn(
-                    userNameTextField.text.toString(),
+                    username_text_field.text.toString(),
                     passwordTextField.text.toString()
                 )
             }
             signUp.setOnClickListener {
                 viewModel.signUp(
-                    userNameTextField.text.toString(),
-                    passwordTextField.text.toString()
+                    username_text_field.text.toString(),
+                    password_text_field.text.toString()
                 )
             }
         }

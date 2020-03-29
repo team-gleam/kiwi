@@ -7,6 +7,5 @@ data class Tasks(
 data class Task(
     val id: Int,
     val date: String,
-    val title: String,
-    val color: String
+    val title: String
 )
