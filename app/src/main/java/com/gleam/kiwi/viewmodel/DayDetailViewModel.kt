@@ -5,11 +5,13 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gleam.kiwi.model.Task
 import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.net.KiwiClient
 import com.gleam.kiwi.net.KiwiService
 import com.gleam.kiwi.net.KiwiServiceInterFace
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 
@@ -44,9 +46,8 @@ class DayDetailViewModel(date: String) : ViewModel() {
 
 
     fun registerTask(task: String){
-        //TODO: Use KiwiClient instance
         val date = LocalDate.now()
-        runBlocking {
+        viewModelScope.launch {
             client.registerTask(Task(-1,date.toString(),task))
         }
     }
@@ -56,7 +57,7 @@ class DayDetailViewModel(date: String) : ViewModel() {
     }
 
     fun deleteTask(index: Int){
-        runBlocking {
+        viewModelScope.launch {
             Log.i("delete task", getTask(index).id.toString())
             client.removeTask(getTask(index).id)
         }
