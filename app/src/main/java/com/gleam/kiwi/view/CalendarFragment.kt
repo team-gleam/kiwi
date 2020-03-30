@@ -41,11 +41,13 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = CalendarViewModel()
 
-        viewModel.daysContainTask.observe(viewLifecycleOwner, Observer { taskList: List<String>? ->
-            taskList?.forEach { task ->
-                calendar.notifyDateChanged(LocalDate.parse(task, DateTimeFormatter.ISO_DATE))
-            }
-        })
+        viewModel.daysContainTask.observe(
+            viewLifecycleOwner,
+            Observer { taskList: List<LocalDate>? ->
+                taskList?.forEach { task ->
+                    calendar.notifyDateChanged(task)
+                }
+            })
 
         setupDaysOfWeek()
         setupCalendar()
@@ -86,13 +88,14 @@ class CalendarFragment : Fragment() {
                         setTextColorRes(R.color.white)
 
                         when {
-                            date == today -> setBackgroundResource(R.drawable.today_bg)
-                            day.owner != DayOwner.THIS_MONTH -> setTextColorRes(R.color.white_light)
+                            day.owner == DayOwner.THIS_MONTH && day.date == today ->
+                                setBackgroundResource(R.drawable.today_bg)
+                            day.owner == DayOwner.THIS_MONTH -> setTextColorRes(R.color.white)
+                            else -> setTextColorRes(R.color.white_light)
                         }
                     }
-
                     viewModel.daysContainTask.value?.let { dayTextsContainTask ->
-                        if (date.toString() in dayTextsContainTask) {
+                        if (date in dayTextsContainTask) {
                             container.view.notification_mark.setBackgroundResource(R.drawable.notification_yellow)
                         }
                     }
