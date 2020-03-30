@@ -9,7 +9,6 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.gleam.kiwi.R
-import com.gleam.kiwi.daysOfWeek
 import com.gleam.kiwi.setTextColorRes
 import com.gleam.kiwi.viewmodel.CalendarViewModel
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -18,6 +17,7 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import kotlinx.android.synthetic.main.calendar_base.*
 import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_fragment.*
+import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
@@ -47,21 +47,28 @@ class CalendarFragment : Fragment() {
             }
         })
 
+        setupDaysOfWeek()
+        setupCalendar()
+    }
+
+    private fun setupDaysOfWeek() {
+        day_of_week.children.mapNotNull { it as? TextView }
+            .forEachIndexed { index, textView ->
+                with(textView) {
+                    text = SORTED_DAYS_OF_WEEK[index]
+                        .getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase(Locale.ENGLISH)
+                    setTextColorRes(R.color.white_light)
+                }
+            }
+    }
+
+    private fun setupCalendar() {
         val currentMonth = YearMonth.now()
         val oldestMonth = currentMonth.minusMonths(12)
         val newestMonth = currentMonth.plusMonths(12)
-        val daysOfWeek = daysOfWeek()
 
-        day_of_week.children.forEachIndexed { index, v ->
-            (v as TextView).apply {
-                text = daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
-                    .toUpperCase(Locale.ENGLISH)
-                setTextColorRes(R.color.white_light)
-            }
-        }
-
-        calendar.apply {
-            setup(oldestMonth, newestMonth, daysOfWeek.first())
+        with(calendar) {
+            setup(oldestMonth, newestMonth, SORTED_DAYS_OF_WEEK.first())
             scrollToMonth(currentMonth)
             monthScrollListener = {
                 year_text.text = it.yearMonth.year.toString()
@@ -77,22 +84,27 @@ class CalendarFragment : Fragment() {
                     container.textView.apply {
                         text = date.dayOfMonth.toString()
                         setTextColorRes(R.color.white)
-                        if (day.owner == DayOwner.THIS_MONTH) {
-                            if (date == today) {
-                                setBackgroundResource(R.drawable.today_bg)
-                            }
-                        } else {
-                            setTextColorRes(R.color.white_light)
+
+                        when {
+                            date == today -> setBackgroundResource(R.drawable.today_bg)
+                            day.owner != DayOwner.THIS_MONTH -> setTextColorRes(R.color.white_light)
                         }
                     }
 
-                    val dateText = date.toString()
-                    val daysContainTasks = viewModel.daysContainTask.value ?: return
-                    if (dateText in daysContainTasks) {
-                        container.view.notification_mark.setBackgroundResource(R.drawable.notification_yellow)
+                    viewModel.daysContainTask.value?.let { dayTextsContainTask ->
+                        if (date.toString() in dayTextsContainTask) {
+                            container.view.notification_mark.setBackgroundResource(R.drawable.notification_yellow)
+                        }
                     }
                 }
             }
         }
     }
+
+    companion object {
+        private val SORTED_DAYS_OF_WEEK = DayOfWeek.values().let { dayOfWeek ->
+            dayOfWeek.takeLast(1) + dayOfWeek.dropLast(1)
+        }
+    }
+
 }
