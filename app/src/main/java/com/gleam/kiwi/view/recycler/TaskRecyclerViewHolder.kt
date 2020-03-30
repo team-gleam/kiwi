@@ -6,7 +6,5 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.task_list_cell.view.*
 
 class TaskRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view){
-
-    val dateTextView: TextView = view.date
     val titleTextView: TextView = view.title
 }

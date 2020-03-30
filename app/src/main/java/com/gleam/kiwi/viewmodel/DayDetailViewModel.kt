@@ -1,4 +1,4 @@
-package com.gleam.kiwi.viewModel
+package com.gleam.kiwi.viewmodel
 
 import android.util.Log
 import android.view.View
@@ -32,14 +32,12 @@ class DayDetailViewModel(date: String) : ViewModel() {
         runBlocking {
             client = KiwiClient(KiwiService().create(KiwiServiceInterFace::class.java))
             val tasks: Tasks? = client.getTasks()
-         //   val tasks: Tasks? = createTestData()
             Log.i("DayDetailViewModel", tasks.toString())
             _taskList?.postValue(getDateTasks(tasks?.tasks, date))
             //_taskList?.postValue(tasks?.tasks)
         }
     }
 
-    // 20XX-10-10
     private fun getDateTasks(tasks: List<Task>?, day: String): List<Task>? {
         return tasks?.filter { it.date == day }
     }
@@ -59,8 +57,13 @@ class DayDetailViewModel(date: String) : ViewModel() {
 
     fun deleteTask(index: Int){
         runBlocking {
+            Log.i("delete task", getTask(index).id.toString())
             client.removeTask(getTask(index).id)
         }
+    }
+
+    fun getTaskTitle(index: Int): String {
+        return getTask(index).title
     }
 
     fun onItemClick(view: View, position: Int){
@@ -68,25 +71,5 @@ class DayDetailViewModel(date: String) : ViewModel() {
     }
 
 
-    private fun createTestData(): Tasks{
-        var taskList = mutableListOf<Task>()
-        for (i in 1..4) {
-            val task: Task = Task(
-                1,
-                "2020/03/21",
-                "hogehgoe"
-            )
-            taskList.add(task)
-        }
-        for (i in 1..3) {
-            val task: Task = Task(
-                2,
-                "2020/03/30",
-                "hoge"
-            )
-            taskList.add(task)
-        }
-        return Tasks(taskList)
-    }
 
 }

@@ -14,14 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gleam.kiwi.R
 import com.gleam.kiwi.databinding.DayDetailFragmentBinding
 import com.gleam.kiwi.view.recycler.TaskRecyclerAdapter
-import com.gleam.kiwi.viewModel.DayDetailViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import com.gleam.kiwi.viewmodel.DayDetailViewModel
+import kotlinx.android.synthetic.main.day_detail_fragment.*
 
 class DayDetailFragment : Fragment() {
    // private val dayDetailViewModel: dayDetailViewModel by viewModel()
     private lateinit var dayDetailViewModel: DayDetailViewModel
     private lateinit var dayDetailFragmentBinding: DayDetailFragmentBinding
-    private val date = "2020/03/21" //placeholder
+    private val date = "2020-03-26" //placeholder
     private lateinit var taskRecyclerAdapter: TaskRecyclerAdapter
 
     private fun testFragment(){
@@ -62,7 +62,7 @@ class DayDetailFragment : Fragment() {
 
     private fun onItemClick(click: View, position: Int){
         //TODO:implement viewModel.onItemClick
-        val dialog = TaskDeleteDialogFragment()
+        val dialog = TaskDeleteDialogFragment(dayDetailViewModel.getTaskTitle(position))
         dialog.onDeleteClickListener = DialogInterface.OnClickListener {
             dialog, id ->
             Log.i("dialog", "delete clicked")
