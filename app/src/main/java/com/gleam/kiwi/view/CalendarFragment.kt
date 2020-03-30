@@ -9,7 +9,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.gleam.kiwi.R
-import com.gleam.kiwi.setTextColorRes
+import com.gleam.kiwi.ext.setTextColorRes
 import com.gleam.kiwi.viewmodel.CalendarViewModel
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
