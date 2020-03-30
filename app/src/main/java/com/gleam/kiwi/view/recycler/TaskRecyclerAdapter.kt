@@ -33,12 +33,10 @@ class TaskRecyclerAdapter(
 
     fun setTasks(tasks: List<Task>){
         this.taskList = tasks
-        Log.i("Adapter", this.taskList.toString())
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskRecyclerViewHolder {
-        Log.i("Adapter", "onCreateViewHolder")
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.task_list_cell, parent, false)
             .apply{

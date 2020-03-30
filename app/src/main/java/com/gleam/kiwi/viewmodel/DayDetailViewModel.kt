@@ -26,7 +26,6 @@ class DayDetailViewModel(date: String) : ViewModel() {
 
 
     init {
-        Log.i("DayDetailViewModel","DayDetailViewModel Initialize!!")
         loadTaskList(date)
     }
 
@@ -34,7 +33,6 @@ class DayDetailViewModel(date: String) : ViewModel() {
         runBlocking {
             client = KiwiClient(KiwiService().create(KiwiServiceInterFace::class.java))
             val tasks: Tasks? = client.getTasks()
-            Log.i("DayDetailViewModel", tasks.toString())
             _taskList?.postValue(getDateTasks(tasks?.tasks, date))
             //_taskList?.postValue(tasks?.tasks)
         }
@@ -58,7 +56,6 @@ class DayDetailViewModel(date: String) : ViewModel() {
 
     fun deleteTask(index: Int){
         viewModelScope.launch {
-            Log.i("delete task", getTask(index).id.toString())
             client.removeTask(getTask(index).id)
         }
     }

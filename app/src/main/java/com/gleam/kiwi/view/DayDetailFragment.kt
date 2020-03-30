@@ -3,7 +3,6 @@ package com.gleam.kiwi.view
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,22 +17,15 @@ import com.gleam.kiwi.databinding.DayDetailFragmentBinding
 import com.gleam.kiwi.view.recycler.TaskRecyclerAdapter
 import com.gleam.kiwi.viewmodel.DayDetailViewModel
 import kotlinx.android.synthetic.main.day_detail_fragment.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DayDetailFragment : Fragment() {
-   // private val dayDetailViewModel: dayDetailViewModel by viewModel()
     private lateinit var dayDetailViewModel: DayDetailViewModel
     private lateinit var dayDetailFragmentBinding: DayDetailFragmentBinding
-    private val date = "2020-03-30" //placeholder
     private lateinit var taskRecyclerAdapter: TaskRecyclerAdapter
-
-    private fun testFragment(){
-        Log.i("DayDetailFragment", "call testFragment()")
-        dayDetailViewModel = DayDetailViewModel(date)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("DayDetailFragment", "call onCreate")
     }
 
     override fun onCreateView(
@@ -67,17 +59,14 @@ class DayDetailFragment : Fragment() {
         val dialog = TaskDeleteDialogFragment(dayDetailViewModel.getTaskTitle(position))
         dialog.onDeleteClickListener = DialogInterface.OnClickListener {
             dialog, id ->
-            Log.i("dialog", "delete clicked")
             dayDetailViewModel.deleteTask(position)
         }
         dialog.show(childFragmentManager, "deleteTask")
-     //   dayDetailViewModel.onItemClick(click, position)
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        testFragment()
         observeViewModel(dayDetailViewModel)
     }
 
