@@ -5,6 +5,7 @@ import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User
 
+
 interface KiwiClientInterface {
     suspend fun signUp(user: User)
     suspend fun signIn(user: User)
@@ -33,14 +34,14 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
     }
 
     override suspend fun registerTimetable(timetable: Timetable) {
-        return kiwiService.registerTimetable(token, timetable)
+        kiwiService.registerTimetable(token, timetable)
     }
 
     override suspend fun getTimetable(): Timetable? {
         return kiwiService.getTimetable(token)
     }
 
-    override suspend fun registerTask(task: Task) {
+    override suspend fun registerTask(task: Task){
         kiwiService.registerTask(token, task)
     }
 
@@ -48,7 +49,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         return kiwiService.getTasks(token)
     }
 
-    override suspend fun removeTask(id: Int) {
-        kiwiService.removeTask(token, id)
+    override suspend fun removeTask(id: Int){
+        kiwiService.removeTask(token, id).toString()
     }
 }
