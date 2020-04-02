@@ -3,4 +3,15 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+    <color name="white_light">#4DFFFFFF</color>
+    <color name="calendar_bg">#5b5a6d</color>
+    <color name="light_bg">#444351</color>
+    <color name="kiwi_green">#66bb6a</color>
+    <color name="kiwi_yellow">#fff59d</color>
+    <color name="kiwi_brawn">#cc9900</color>
+    <color name="login_button">#524c44</color>
+    <color name="login_text">#b3a594</color>
+    <color name="edittext_hint">#c0c0c0</color>
 </resources>
