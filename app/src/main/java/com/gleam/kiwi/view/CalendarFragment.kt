@@ -18,6 +18,7 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import kotlinx.android.synthetic.main.calendar_base.*
 import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_fragment.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
@@ -26,7 +27,7 @@ import org.threeten.bp.format.TextStyle
 import java.util.*
 
 class CalendarFragment : Fragment() {
-    private lateinit var viewModel: CalendarViewModel
+    private val viewModel: CalendarViewModel by viewModel()
     private val today = LocalDate.now()
     private val monthFormatter = DateTimeFormatter.ofPattern("MMMM")
 
@@ -40,8 +41,6 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = CalendarViewModel()
-
         viewModel.daysContainTask.observe(
             viewLifecycleOwner,
             Observer { taskList: List<LocalDate>? ->

@@ -12,10 +12,11 @@ import com.gleam.kiwi.R
 import com.gleam.kiwi.net.NetworkStatus
 import com.gleam.kiwi.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.login_fragment.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +26,6 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel = LoginViewModel()
         sign_in.setOnClickListener { signIn() }
         sign_up.setOnClickListener { signUp() }
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { status ->
