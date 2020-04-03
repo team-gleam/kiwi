@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
     private val service = KiwiService().create(KiwiServiceInterFace::class.java)
-    private val client = KiwiClient(service)
+    private val client = KiwiClient.getInstance(service)
     private val _loginStatus: MutableLiveData<NetworkStatus> = MutableLiveData()
     val loginStatus: LiveData<NetworkStatus>
         get() {

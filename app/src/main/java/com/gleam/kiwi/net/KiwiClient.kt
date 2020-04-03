@@ -19,7 +19,14 @@ interface KiwiClientInterface {
 }
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
-    private lateinit var token: String
+    companion object {
+        private lateinit var token: String
+        private var instance: KiwiClient? = null
+        fun getInstance(service: KiwiServiceInterFace) = instance ?: synchronized(this) {
+            instance ?: KiwiClient(service)
+                .also { instance = it }
+        }
+    }
 
     override suspend fun signUp(user: User): NetworkStatus {
         return try {

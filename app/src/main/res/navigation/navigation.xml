@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.gleam.kiwi.view.LoginFragment"
         android:label="login_fragment"
-        tools:layout="@layout/login_fragment" >
+        tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
@@ -18,5 +18,20 @@
         android:id="@+id/calendarFragment"
         android:name="com.gleam.kiwi.view.CalendarFragment"
         android:label="calendar_fragment"
-        tools:layout="@layout/calendar_fragment" />
+        tools:layout="@layout/calendar_fragment">
+        <action
+            android:id="@+id/action_calendarFragment_to_dayDetailFragment"
+            app:destination="@id/dayDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dayDetailFragment"
+        android:name="com.gleam.kiwi.view.DayDetailFragment"
+        android:label="day_detail_fragment"
+        tools:layout="@layout/day_detail_fragment">
+
+        <argument
+            android:name="content"
+            app:argType="string" />
+
+    </fragment>
 </navigation>

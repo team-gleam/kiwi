@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
-class CalendarViewModel : ViewModel() {
+class CalendarViewModel() : ViewModel() {
     private val client = KiwiClient(KiwiService().create(KiwiServiceInterFace::class.java))
     private var taskList: Tasks? = null
     private var _daysContainTask: MutableLiveData<List<LocalDate>> = MutableLiveData()
@@ -29,12 +29,12 @@ class CalendarViewModel : ViewModel() {
     private fun setTaskList() {
         viewModelScope.launch {
             val res = client.getTasks()
-            when (res) {
+            taskList = when (res) {
                 is NetworkStatusWithTasks.Success -> {
-                    taskList = res.tasks
+                    res.tasks
                 }
                 else -> {
-                    taskList = null
+                    null
                 }
             }
             setDaysContainTask()
@@ -45,4 +45,5 @@ class CalendarViewModel : ViewModel() {
         _daysContainTask.value =
             taskList?.tasks?.map { t -> LocalDate.parse(t.date, DateTimeFormatter.ISO_DATE) }
     }
+
 }

@@ -16,11 +16,11 @@ interface KiwiServiceInterFace {
     @POST("users")
     suspend fun signUp(@Body user: User): Response<Unit>
 
-    @DELETE("users")
+    @HTTP(method = "DELETE", path = "users", hasBody = true)
     suspend fun revokeUser(@Body user: User): Response<Unit>
 
     @POST("tokens")
-    suspend fun getNewToken(@Body user: User): Response<String>
+    suspend fun getNewToken(@Body user: User): Response<String?>
 
     @POST("timetables")
     suspend fun registerTimetable(
@@ -37,14 +37,12 @@ interface KiwiServiceInterFace {
     @GET("tasks")
     suspend fun getTasks(@Header("token") token: String): Response<Tasks?>
 
-    @DELETE("tasks")
+    @HTTP(method = "DELETE", path = "tasks", hasBody = true)
     suspend fun removeTask(@Header("token") token: String, @Body id: Int): Response<Unit>
 }
 
 class KiwiService {
-    //    private val API_URL = "https://gleam.works:10080"
-    private val API_URL: String
-        get() = "http://10.0.2.2:3000"
+    private val API_URL = "https://gleam.works:10080"
     private lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
@@ -62,5 +60,4 @@ class KiwiService {
 
         return retrofit.create(serviceClass)
     }
-
 }

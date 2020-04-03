@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.gleam.kiwi.R
 import com.gleam.kiwi.net.NetworkStatus
 import com.gleam.kiwi.viewmodel.LoginViewModel
@@ -48,8 +49,7 @@ class LoginFragment : Fragment() {
 
     private fun loginStatusDistributor(status: NetworkStatus) {
         when (status) {
-            NetworkStatus.Success -> Toast.makeText(context, "Login Success!", Toast.LENGTH_SHORT)
-                .show()
+            NetworkStatus.Success -> findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
             NetworkStatus.NotFound -> Toast.makeText(
                 context,
                 "Account Not Found",

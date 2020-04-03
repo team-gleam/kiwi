@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.gleam.kiwi.R
 import com.gleam.kiwi.ext.setTextColorRes
 import com.gleam.kiwi.viewmodel.CalendarViewModel
@@ -81,8 +82,14 @@ class CalendarFragment : Fragment() {
                 override fun create(view: View) = CalendarContainer(view)
                 override fun bind(container: CalendarContainer, day: CalendarDay) {
                     val date = day.date
-
                     container.day = day
+                    container.textView.setOnClickListener {
+                        val action =
+                            CalendarFragmentDirections.actionCalendarFragmentToDayDetailFragment(
+                                date.toString()
+                            )
+                        findNavController().navigate(action)
+                    }
                     container.textView.apply {
                         text = date.dayOfMonth.toString()
                         setTextColorRes(R.color.white)
