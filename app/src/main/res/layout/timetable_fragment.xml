@@ -1,13 +1,386 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.TimetableFragment">
+    tools:context=".view.viewModel.timetableFragment">
 
-    <TextView
+    <!-- Binding Objects -->
+    <data>
+        <variable name="viewModel" type="com.gleam.kiwi.viewmodel.TimetableViewModel" />
+    </data>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:orientation="horizontal">
 
-</FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/light_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="@string/_1"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="@string/_2"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="@string/_3"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="@string/_4"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="@string/_5"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/monday"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:ems="10"
+                    android:text="@string/mon"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tuesday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:ems="10"
+                    android:text="@string/tue"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/wednesday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:ems="10"
+                    android:text="@string/wed"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/thursday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:ems="10"
+                    android:text="@string/thu"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/friday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:ems="10"
+                    android:text="@string/fri"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/calendar_bg">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/mon1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.mon.get1().subject + @string/linefeed + viewModel.timetable.mon.get1().room}" />
+
+                    <TextView
+                        android:id="@+id/tue1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.tue.get1().subject + @string/linefeed + viewModel.timetable.tue.get1().room}" />
+
+                    <TextView
+                        android:id="@+id/wed1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.wed.get1().subject + @string/linefeed + viewModel.timetable.wed.get1().room}" />
+
+                    <TextView
+                        android:id="@+id/thu1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.thu.get1().subject + @string/linefeed + viewModel.timetable.thu.get1().room}" />
+
+                    <TextView
+                        android:id="@+id/fri1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.fri.get1().subject + @string/linefeed + viewModel.timetable.fri.get1().room}" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/mon2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.mon.get2().subject + @string/linefeed + viewModel.timetable.mon.get2().room}"/>
+
+                    <TextView
+                        android:id="@+id/tue2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.tue.get2().subject + @string/linefeed + viewModel.timetable.tue.get2().room}" />
+
+                    <TextView
+                        android:id="@+id/wed2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.wed.get2().subject + @string/linefeed + viewModel.timetable.wed.get2().room}" />
+
+                    <TextView
+                        android:id="@+id/thu2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.thu.get2().subject + @string/linefeed + viewModel.timetable.thu.get2().room}" />
+
+                    <TextView
+                        android:id="@+id/fri2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.fri.get2().subject + @string/linefeed + viewModel.timetable.fri.get2().room}" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/mon3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.mon.get3().subject + @string/linefeed + viewModel.timetable.mon.get3().room}" />
+
+                    <TextView
+                        android:id="@+id/tue3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.tue.get3().subject + @string/linefeed + viewModel.timetable.tue.get3().room}" />
+
+                    <TextView
+                        android:id="@+id/wed3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.wed.get3().subject + @string/linefeed + viewModel.timetable.wed.get3().room}" />
+
+                    <TextView
+                        android:id="@+id/thu3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.thu.get3().subject + @string/linefeed + viewModel.timetable.thu.get3().room}" />
+
+                    <TextView
+                        android:id="@+id/fri3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.fri.get3().subject + @string/linefeed + viewModel.timetable.fri.get3().room}" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/mon4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.mon.get4().subject + @string/linefeed + viewModel.timetable.mon.get4().room}" />
+
+                    <TextView
+                        android:id="@+id/tue4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.tue.get4().subject + @string/linefeed + viewModel.timetable.tue.get4().room}" />
+
+                    <TextView
+                        android:id="@+id/wed4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.wed.get4().subject + @string/linefeed + viewModel.timetable.wed.get4().room}" />
+
+                    <TextView
+                        android:id="@+id/thu4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.thu.get4().subject + @string/linefeed + viewModel.timetable.thu.get4().room}" />
+
+                    <TextView
+                        android:id="@+id/fri4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.fri.get4().subject + @string/linefeed + viewModel.timetable.fri.get4().room}" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/mon5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.mon.get5().subject + @string/linefeed + viewModel.timetable.mon.get5().room}" />
+
+                    <TextView
+                        android:id="@+id/tue5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.tue.get5().subject + @string/linefeed + viewModel.timetable.tue.get5().room}" />
+
+                    <TextView
+                        android:id="@+id/wed5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.wed.get5().subject + @string/linefeed + viewModel.timetable.wed.get5().room}" />
+
+                    <TextView
+                        android:id="@+id/thu5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.thu.get5().subject + @string/linefeed + viewModel.timetable.thu.get5().room}" />
+
+                    <TextView
+                        android:id="@+id/fri5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:text="@{viewModel.timetable.fri.get5().subject + @string/linefeed + viewModel.timetable.fri.get5().room}" />
+                </TableRow>
+
+
+            </TableLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

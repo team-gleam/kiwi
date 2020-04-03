@@ -8,20 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.gleam.kiwi.R
+import com.gleam.kiwi.databinding.TimetableFragmentBinding
 import com.gleam.kiwi.viewmodel.TimetableViewModel
 
 class TimetableFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = TimetableFragment()
-    }
-
     private lateinit var viewModel: TimetableViewModel
+    private lateinit var timetableFragmentBinding: TimetableFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.timetable_fragment, container, false)
     }
 
