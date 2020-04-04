@@ -4,6 +4,7 @@ import com.gleam.kiwi.model.Task
 import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User
+import java.net.SocketTimeoutException
 
 interface KiwiClientInterface {
     suspend fun signUp(user: User): NetworkStatus
@@ -21,11 +22,11 @@ interface KiwiClientInterface {
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
     companion object {
         private lateinit var token: String
-        private var instance: KiwiClient? = null
-        fun getInstance(service: KiwiServiceInterFace) = instance ?: synchronized(this) {
-            instance ?: KiwiClient(service)
-                .also { instance = it }
-        }
+//        private var instance: KiwiClient? = null
+//        fun getInstance(service: KiwiServiceInterFace) = instance ?: synchronized(this) {
+//            instance ?: KiwiClient(service)
+//                .also { instance = it }
+//        }
     }
 
     override suspend fun signUp(user: User): NetworkStatus {
@@ -35,7 +36,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                 404 -> NetworkStatus.NotFound
                 else -> NetworkStatus.Error
             }
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             NetworkStatus.Timeout
         }
     }
@@ -53,7 +54,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                 404 -> NetworkStatus.NotFound
                 else -> NetworkStatus.Error
             }
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             NetworkStatus.Timeout
         }
     }
@@ -65,7 +66,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                 404 -> NetworkStatus.NotFound
                 else -> NetworkStatus.Error
             }
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             NetworkStatus.Timeout
         }
     }
@@ -77,7 +78,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                 404 -> NetworkStatus.NotFound
                 else -> NetworkStatus.Error
             }
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             NetworkStatus.Timeout
         }
     }
@@ -90,7 +91,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                 404 -> NetworkStatusWithTimeTable.NotFound
                 else -> NetworkStatusWithTimeTable.Error
             }
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             NetworkStatusWithTimeTable.Timeout
         }
     }
@@ -102,7 +103,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                 404 -> NetworkStatus.NotFound
                 else -> NetworkStatus.Error
             }
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             NetworkStatus.Timeout
         }
     }
@@ -115,7 +116,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                 404 -> NetworkStatusWithTasks.NotFound
                 else -> NetworkStatusWithTasks.Error
             }
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             NetworkStatusWithTasks.Timeout
         }
     }
@@ -127,7 +128,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                 404 -> NetworkStatus.NotFound
                 else -> NetworkStatus.Error
             }
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: SocketTimeoutException) {
             NetworkStatus.Timeout
         }
     }

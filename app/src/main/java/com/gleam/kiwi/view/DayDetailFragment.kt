@@ -15,11 +15,13 @@ import com.gleam.kiwi.R
 import com.gleam.kiwi.view.recycler.TaskRecyclerAdapter
 import com.gleam.kiwi.viewmodel.DayDetailViewModel
 import kotlinx.android.synthetic.main.day_detail_fragment.*
+import org.koin.android.ext.android.get
+
 
 class DayDetailFragment : Fragment() {
+    private val action: DayDetailFragmentArgs by navArgs()
     private lateinit var dayDetailViewModel: DayDetailViewModel
     private lateinit var taskRecyclerAdapter: TaskRecyclerAdapter
-    private val action: DayDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,8 +31,8 @@ class DayDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dayDetailViewModel = DayDetailViewModel(action.content)
         taskRecyclerAdapter = TaskRecyclerAdapter(this@DayDetailFragment::onItemClick)
+        dayDetailViewModel = DayDetailViewModel(date = action.content, client = get())
 
         taskRecyclerView.apply {
             adapter = taskRecyclerAdapter

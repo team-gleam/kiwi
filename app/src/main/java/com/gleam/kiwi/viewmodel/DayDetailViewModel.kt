@@ -6,15 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gleam.kiwi.model.Task
 import com.gleam.kiwi.net.KiwiClient
-import com.gleam.kiwi.net.KiwiService
-import com.gleam.kiwi.net.KiwiServiceInterFace
 import com.gleam.kiwi.net.NetworkStatusWithTasks
 import kotlinx.coroutines.launch
 
-class DayDetailViewModel(val date: String) : ViewModel() {
-
-    private val service = KiwiService().create(KiwiServiceInterFace::class.java)
-    private val client = KiwiClient.getInstance(service)
+class DayDetailViewModel(val date: String, val client: KiwiClient) : ViewModel() {
     private val _taskList: MutableLiveData<List<Task>>? = MutableLiveData()
     val taskList: LiveData<List<Task>>?
         get() {
