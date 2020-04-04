@@ -4,42 +4,67 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.gleam.kiwi.R
-import com.gleam.kiwi.databinding.LoginFragmentBinding
+import com.gleam.kiwi.net.NetworkStatus
 import com.gleam.kiwi.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.login_fragment.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
-
-    private lateinit var loginFragmentBinding: LoginFragmentBinding
-    private lateinit var viewModel: LoginViewModel
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        loginFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.login_fragment, container, false)
-        viewModel = LoginViewModel()
+        return inflater.inflate(R.layout.login_fragment, container, false)
+    }
 
-        loginFragmentBinding.apply {
-            signIn.setOnClickListener {
-                viewModel.signIn(
-                    username_text_field.text.toString(),
-                    passwordTextField.text.toString()
-                )
-            }
-            signUp.setOnClickListener {
-                viewModel.signUp(
-                    username_text_field.text.toString(),
-                    password_text_field.text.toString()
-                )
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        sign_in.setOnClickListener { signIn() }
+        sign_up.setOnClickListener { signUp() }
+        viewModel.loginStatus.observe(viewLifecycleOwner, Observer { status ->
+            loginStatusDistributor(status)
+        })
+    }
+
+    private fun signIn() {
+        viewModel.signIn(
+            extractUsername(),
+            extractPassword()
+        )
+    }
+
+    private fun signUp() {
+        viewModel.signUp(
+            extractUsername(),
+            extractPassword()
+        )
+    }
+
+    private fun loginStatusDistributor(status: NetworkStatus) {
+        when (status) {
+            NetworkStatus.Success -> findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
+            NetworkStatus.NotFound -> Toast.makeText(
+                context,
+                "Account Not Found",
+                Toast.LENGTH_SHORT
+            ).show()
+            NetworkStatus.Error -> Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            NetworkStatus.Timeout -> Toast.makeText(context, "Timeout", Toast.LENGTH_SHORT).show()
         }
+    }
 
-        return loginFragmentBinding.root
+    private fun extractUsername(): String {
+        return username_text_field.text.toString()
+    }
+
+    private fun extractPassword(): String {
+        return password_text_field.text.toString()
     }
 
 }

@@ -1,73 +1,57 @@
 package com.gleam.kiwi.viewmodel
 
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gleam.kiwi.model.Task
-import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.net.KiwiClient
-import com.gleam.kiwi.net.KiwiService
-import com.gleam.kiwi.net.KiwiServiceInterFace
+import com.gleam.kiwi.net.NetworkStatusWithTasks
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.time.LocalDate
 
-class DayDetailViewModel(date: String) : ViewModel() {
-
-    private lateinit var client: KiwiClient
+class DayDetailViewModel(val date: String, val client: KiwiClient) : ViewModel() {
     private val _taskList: MutableLiveData<List<Task>>? = MutableLiveData()
     val taskList: LiveData<List<Task>>?
         get() {
             return _taskList
         }
 
-
     init {
-        loadTaskList(date)
+        setTaskList()
     }
 
-    private fun loadTaskList(date: String) {
-        runBlocking {
-            client = KiwiClient(KiwiService().create(KiwiServiceInterFace::class.java))
-            val tasks: Tasks? = client.getTasks()
-            _taskList?.postValue(getDateTasks(tasks?.tasks, date))
-            //_taskList?.postValue(tasks?.tasks)
+    private fun setTaskList() {
+        viewModelScope.launch {
+            val tasks = when (val res = client.getTasks()) {
+                is NetworkStatusWithTasks.Success -> res.tasks
+                else -> null
+            }
+            _taskList?.value = getSpecifiedDaysTasks(date, tasks?.tasks)
         }
     }
 
-    private fun getDateTasks(tasks: List<Task>?, day: String): List<Task>? {
+    private fun getSpecifiedDaysTasks(day: String, tasks: List<Task>?): List<Task>? {
         return tasks?.filter { it.date == day }
     }
 
 
-    fun registerTask(task: String){
-        val date = LocalDate.now()
+    fun registerTask(task: String) {
         viewModelScope.launch {
-            client.registerTask(Task(-1,date.toString(),task))
+            client.registerTask(Task(-1, date, task))
+            setTaskList()
         }
     }
 
-    private fun getTask(index: Int): Task{
-        return taskList?.value!![index]
-    }
-
-    fun deleteTask(index: Int){
+    fun deleteTask(position: Int) {
         viewModelScope.launch {
-            client.removeTask(getTask(index).id)
+            taskList?.value?.get(position)?.let {
+                client.removeTask(it.id)
+                setTaskList()
+            }
         }
     }
 
-    fun getTaskTitle(index: Int): String {
-        return getTask(index).title
+    fun getTaskTitle(position: Int): String? {
+        return taskList?.value?.get(position)?.title
     }
-
-    fun onItemClick(view: View, position: Int){
-        Log.i("onItemClick", view.toString()+position.toString())
-    }
-
-
-
 }

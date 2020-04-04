@@ -1,61 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.LoginFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/calendar_bg">
+
+        <ImageView
+            android:id="@+id/kiwi_icon"
+            android:layout_width="215dp"
+            android:layout_height="195dp"
+            app:layout_constraintBottom_toTopOf="@+id/username_text_field"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.54"
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="kiwi" />
 
         <EditText
             android:id="@+id/username_text_field"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
             android:autofillHints="@string/username"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:drawablePadding="10dp"
             android:ems="10"
             android:hint="@string/username"
             android:inputType="textPersonName"
+            android:textColor="@color/white"
+            android:textColorHint="@color/edittext_hint"
             app:layout_constraintBottom_toTopOf="@+id/password_text_field"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.979" />
 
         <EditText
             android:id="@+id/password_text_field"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
             android:autofillHints=""
+            android:drawableStart="@drawable/ic_lock_black_24dp"
+            android:drawablePadding="10dp"
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/edittext_hint"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.669" />
 
         <Button
             android:id="@+id/sign_in"
-            android:layout_width="128dp"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="60dp"
             android:layout_marginBottom="24dp"
-            android:background="#88BFFF00"
+            android:background="@drawable/shape_rounded_corners"
+            android:backgroundTint="@color/light_bg"
             android:text="@string/sign_in_text"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/sign_up"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password_text_field" />
 
         <Button
             android:id="@+id/sign_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="60dp"
+            android:backgroundTint="@color/light_bg"
             android:text="@string/sign_up_text"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_in" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
