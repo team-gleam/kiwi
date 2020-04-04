@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.login_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
-
     private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreateView(

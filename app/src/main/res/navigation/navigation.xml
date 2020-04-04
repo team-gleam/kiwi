@@ -22,6 +22,7 @@
         <action
             android:id="@+id/action_calendarFragment_to_dayDetailFragment"
             app:destination="@id/dayDetailFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/dayDetailFragment"
