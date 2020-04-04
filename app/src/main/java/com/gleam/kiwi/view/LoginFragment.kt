@@ -34,15 +34,15 @@ class LoginFragment : Fragment() {
 
     private fun signIn() {
         viewModel.signIn(
-            extractUsersInputFromUsernameTextField(),
-            extractUsersInputFromPasswordTextField()
+            extractUsername(),
+            extractPassword()
         )
     }
 
     private fun signUp() {
         viewModel.signUp(
-            extractUsersInputFromUsernameTextField(),
-            extractUsersInputFromPasswordTextField()
+            extractUsername(),
+            extractPassword()
         )
     }
 
@@ -59,11 +59,11 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun extractUsersInputFromUsernameTextField(): String {
+    private fun extractUsername(): String {
         return username_text_field.text.toString()
     }
 
-    private fun extractUsersInputFromPasswordTextField(): String {
+    private fun extractPassword(): String {
         return password_text_field.text.toString()
     }
 
