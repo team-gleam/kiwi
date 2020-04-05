@@ -21,7 +21,6 @@ interface KiwiClientInterface {
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
     private lateinit var token: String
-
     override suspend fun signUp(user: User): NetworkStatus {
         return try {
             when (kiwiService.signUp(user).code()) {

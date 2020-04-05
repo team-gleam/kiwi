@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.gleam.kiwi.R
+import com.gleam.kiwi.ext.setBottomNavigationBar
 import com.gleam.kiwi.ext.setTextColorRes
 import com.gleam.kiwi.viewmodel.CalendarViewModel
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -52,6 +53,8 @@ class CalendarFragment : Fragment() {
 
         setupDaysOfWeek()
         setupCalendar()
+
+        setBottomNavigationBar(true)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

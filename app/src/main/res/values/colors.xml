@@ -14,4 +14,5 @@
     <color name="login_button">#524c44</color>
     <color name="login_text">#b3a594</color>
     <color name="edittext_hint">#c0c0c0</color>
+    <color name="bottom_bar_bg">#5b636e</color>
 </resources>

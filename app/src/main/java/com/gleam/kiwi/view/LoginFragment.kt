@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.gleam.kiwi.R
+import com.gleam.kiwi.ext.setBottomNavigationBar
 import com.gleam.kiwi.net.NetworkStatus
 import com.gleam.kiwi.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.login_fragment.*
@@ -30,6 +31,8 @@ class LoginFragment : Fragment() {
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { status ->
             loginStatusDistributor(status)
         })
+
+        setBottomNavigationBar(false)
     }
 
     private fun signIn() {

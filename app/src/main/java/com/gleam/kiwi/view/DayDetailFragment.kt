@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gleam.kiwi.R
+import com.gleam.kiwi.ext.setBottomNavigationBar
 import com.gleam.kiwi.view.recycler.TaskRecyclerAdapter
 import com.gleam.kiwi.viewmodel.DayDetailViewModel
 import kotlinx.android.synthetic.main.day_detail_fragment.*
@@ -46,6 +47,8 @@ class DayDetailFragment : Fragment() {
         dayDetailViewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
             tasks?.also { taskRecyclerAdapter.setTasks(it) }
         })
+
+        setBottomNavigationBar(false)
     }
 
     private fun onItemClick(position: Int) {
