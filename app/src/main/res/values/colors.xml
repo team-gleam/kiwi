@@ -12,4 +12,7 @@
     <color name="kiwi_yellow">#fff59d</color>
     <color name="kiwi_brawn">#cc9900</color>
     <color name="border">#4D292929</color>
+    <color name="login_button">#524c44</color>
+    <color name="login_text">#b3a594</color>
+    <color name="edittext_hint">#c0c0c0</color>
 </resources>

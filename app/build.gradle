@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 29
@@ -95,4 +96,16 @@ dependencies {
 
     //calendar
     implementation "com.github.kizitonwose:CalendarView:0.3.2"
+
+    //koin
+    implementation "org.koin:koin-core:2.0.1"
+    implementation "org.koin:koin-core-ext:2.0.1"
+    implementation "org.koin:koin-android:2.0.1"
+    implementation "org.koin:koin-android-scope:2.0.1"
+    implementation "org.koin:koin-android-viewmodel:2.0.1"
+    implementation "org.koin:koin-android-ext:2.0.1"
+
+    // activity
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "androidx.activity:activity:1.1.0"
 }

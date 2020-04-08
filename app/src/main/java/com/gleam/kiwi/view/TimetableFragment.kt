@@ -2,10 +2,13 @@ package com.gleam.kiwi.view
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 
 import com.gleam.kiwi.R
 import com.gleam.kiwi.databinding.TimetableFragmentBinding
@@ -16,18 +19,32 @@ class TimetableFragment : Fragment() {
     private lateinit var viewModel: TimetableViewModel
     private lateinit var timetableFragmentBinding: TimetableFragmentBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = TimetableViewModel()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        timetableFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.timetable_fragment, container, false)
+        timetableFragmentBinding.viewModel = viewModel
+        return timetableFragmentBinding.root
+    }
 
-        return inflater.inflate(R.layout.timetable_fragment, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.timetable?.observe(viewLifecycleOwner, Observer { timetable ->
+            timetable?.also{
+
+            }
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(TimetableViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

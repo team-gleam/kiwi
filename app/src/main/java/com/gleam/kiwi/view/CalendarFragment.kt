@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.gleam.kiwi.R
 import com.gleam.kiwi.ext.setTextColorRes
 import com.gleam.kiwi.viewmodel.CalendarViewModel
@@ -17,6 +19,7 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import kotlinx.android.synthetic.main.calendar_base.*
 import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_fragment.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
@@ -25,7 +28,7 @@ import org.threeten.bp.format.TextStyle
 import java.util.*
 
 class CalendarFragment : Fragment() {
-    private lateinit var viewModel: CalendarViewModel
+    private val viewModel: CalendarViewModel by viewModel()
     private val today = LocalDate.now()
     private val monthFormatter = DateTimeFormatter.ofPattern("MMMM")
 
@@ -39,8 +42,6 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = CalendarViewModel()
-
         viewModel.daysContainTask.observe(
             viewLifecycleOwner,
             Observer { taskList: List<LocalDate>? ->
@@ -51,6 +52,14 @@ class CalendarFragment : Fragment() {
 
         setupDaysOfWeek()
         setupCalendar()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        // disable back key
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() = Unit
+        })
     }
 
     private fun setupDaysOfWeek() {
@@ -81,8 +90,14 @@ class CalendarFragment : Fragment() {
                 override fun create(view: View) = CalendarContainer(view)
                 override fun bind(container: CalendarContainer, day: CalendarDay) {
                     val date = day.date
-
                     container.day = day
+                    container.textView.setOnClickListener {
+                        val action =
+                            CalendarFragmentDirections.actionCalendarFragmentToDayDetailFragment(
+                                date.toString()
+                            )
+                        findNavController().navigate(action)
+                    }
                     container.textView.apply {
                         text = date.dayOfMonth.toString()
                         setTextColorRes(R.color.white)

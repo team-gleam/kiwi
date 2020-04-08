@@ -1,6 +1,10 @@
 package com.gleam.kiwi.model
 
 data class Timetable(
+    val timetable: Structure
+)
+
+data class Structure(
     val mon: Mon,
     val tue: Tue,
     val wed: Wed,
@@ -9,43 +13,43 @@ data class Timetable(
 )
 
 data class Mon(
-    val `1`: Details?,
-    val `2`: Details?,
-    val `3`: Details?,
-    val `4`: Details?,
-    val `5`: Details?
+    val first: Details?,
+    val second: Details?,
+    val third: Details?,
+    val fourth: Details?,
+    val fifth: Details?
 )
 
 data class Tue(
-    val `1`: Details?,
-    val `2`: Details?,
-    val `3`: Details?,
-    val `4`: Details?,
-    val `5`: Details?
+    val first: Details?,
+    val second: Details?,
+    val third: Details?,
+    val fourth: Details?,
+    val fifth: Details?
 )
 
 data class Wed(
-    val `1`: Details?,
-    val `2`: Details?,
-    val `3`: Details?,
-    val `4`: Details?,
-    val `5`: Details?
+    val first: Details?,
+    val second: Details?,
+    val third: Details?,
+    val fourth: Details?,
+    val fifth: Details?
 )
 
 data class Thu(
-    val `1`: Details?,
-    val `2`: Details?,
-    val `3`: Details?,
-    val `4`: Details?,
-    val `5`: Details?
+    val first: Details?,
+    val second: Details?,
+    val third: Details?,
+    val fourth: Details?,
+    val fifth: Details?
 )
 
 data class Fri(
-    val `1`: Details?,
-    val `2`: Details?,
-    val `3`: Details?,
-    val `4`: Details?,
-    val `5`: Details?
+    val first: Details?,
+    val second: Details?,
+    val third: Details?,
+    val fourth: Details?,
+    val fifth: Details?
 )
 
 data class Details(

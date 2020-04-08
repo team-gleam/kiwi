@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.viewModel.timetableFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.viewModel.timetable.timetable.ragment">
 
     <!-- Binding Objects -->
     <data>
         <variable name="viewModel" type="com.gleam.kiwi.viewmodel.TimetableViewModel" />
+        <import type="android.view.View"/>
     </data>
 
 
@@ -145,237 +147,531 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/calendar_bg">
+                android:background="@color/calendar_bg"
+                android:stretchColumns="*">
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/mon1"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.mon.get1().subject + @string/linefeed + viewModel.timetable.mon.get1().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.mon.first.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.mon.first.room}"/>
 
-                    <TextView
-                        android:id="@+id/tue1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.tue.get1().subject + @string/linefeed + viewModel.timetable.tue.get1().room}" />
 
-                    <TextView
-                        android:id="@+id/wed1"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.wed.get1().subject + @string/linefeed + viewModel.timetable.wed.get1().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.tue.first.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.tue.first.room}"/>
 
-                    <TextView
-                        android:id="@+id/thu1"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.thu.get1().subject + @string/linefeed + viewModel.timetable.thu.get1().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.wed.first.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.wed.first.room}"/>
 
-                    <TextView
-                        android:id="@+id/fri1"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.fri.get1().subject + @string/linefeed + viewModel.timetable.fri.get1().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.thu.first.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.thu.first.room}"/>
+
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:textSubject="@{viewModel.timetable.timetable.fri.first.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.fri.first.room}"/>
+
+
+
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/mon1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.mon.first.subject + @string/linefeed + viewModel.timetable.timetable.mon.first.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tue1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.tue.first.subject + @string/linefeed + viewModel.timetable.timetable.tue.first.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/wed1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.wed.first.subject + @string/linefeed + viewModel.timetable.timetable.wed.first.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/thu1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.thu.first.subject + @string/linefeed + viewModel.timetable.timetable.thu.first.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/fri1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.fri.first.subject + @string/linefeed + viewModel.timetable.timetable.fri.first.room}"-->
+<!--                        android:textSize="14sp" />-->
 
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/mon2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.mon.get2().subject + @string/linefeed + viewModel.timetable.mon.get2().room}"/>
 
-                    <TextView
-                        android:id="@+id/tue2"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.tue.get2().subject + @string/linefeed + viewModel.timetable.tue.get2().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.mon.second.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.mon.second.room}"/>
 
-                    <TextView
-                        android:id="@+id/wed2"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.wed.get2().subject + @string/linefeed + viewModel.timetable.wed.get2().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.tue.second.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.tue.second.room}"/>
 
-                    <TextView
-                        android:id="@+id/thu2"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.thu.get2().subject + @string/linefeed + viewModel.timetable.thu.get2().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.wed.second.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.wed.second.room}"/>
 
-                    <TextView
-                        android:id="@+id/fri2"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.fri.get2().subject + @string/linefeed + viewModel.timetable.fri.get2().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.thu.second.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.thu.second.room}"/>
+
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:textSubject="@{viewModel.timetable.timetable.fri.second.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.fri.second.room}"/>
+
+
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/mon2"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.mon.second.subject + @string/linefeed + viewModel.timetable.timetable.mon.second.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tue2"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.tue.second.subject + @string/linefeed + viewModel.timetable.timetable.tue.second.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/wed2"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.wed.second.subject + @string/linefeed + viewModel.timetable.timetable.wed.second.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/thu2"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.thu.second.subject + @string/linefeed + viewModel.timetable.timetable.thu.second.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/fri2"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.fri.second.subject + @string/linefeed + viewModel.timetable.timetable.fri.second.room}"-->
+<!--                        android:textSize="14sp" />-->
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/mon3"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.mon.get3().subject + @string/linefeed + viewModel.timetable.mon.get3().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.mon.third.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.mon.third.room}"/>
 
-                    <TextView
-                        android:id="@+id/tue3"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.tue.get3().subject + @string/linefeed + viewModel.timetable.tue.get3().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.tue.third.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.tue.third.room}"/>
 
-                    <TextView
-                        android:id="@+id/wed3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.wed.get3().subject + @string/linefeed + viewModel.timetable.wed.get3().room}" />
 
-                    <TextView
-                        android:id="@+id/thu3"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.thu.get3().subject + @string/linefeed + viewModel.timetable.thu.get3().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.wed.third.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.wed.third.room}"/>
 
-                    <TextView
-                        android:id="@+id/fri3"
-                        android:layout_width="match_parent"
+
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.fri.get3().subject + @string/linefeed + viewModel.timetable.fri.get3().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.thu.third.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.thu.third.room}"/>
+
+
+
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:textSubject="@{viewModel.timetable.timetable.fri.third.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.fri.third.room}"/>
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/mon3"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.mon.third.subject + @string/linefeed + viewModel.timetable.timetable.mon.third.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tue3"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.tue.third.subject + @string/linefeed + viewModel.timetable.timetable.tue.third.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/wed3"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.wed.third.subject + @string/linefeed + viewModel.timetable.timetable.wed.third.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/thu3"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.thu.third.subject + @string/linefeed + viewModel.timetable.timetable.thu.third.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/fri3"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.fri.third.subject + @string/linefeed + viewModel.timetable.timetable.fri.third.room}"-->
+<!--                        android:textSize="14sp" />-->
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/mon4"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.mon.get4().subject + @string/linefeed + viewModel.timetable.mon.get4().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.mon.fourth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.mon.fourth.room}"/>
 
-                    <TextView
-                        android:id="@+id/tue4"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.tue.get4().subject + @string/linefeed + viewModel.timetable.tue.get4().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.tue.fourth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.tue.fourth.room}"/>
 
-                    <TextView
-                        android:id="@+id/wed4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.wed.get4().subject + @string/linefeed + viewModel.timetable.wed.get4().room}" />
 
-                    <TextView
-                        android:id="@+id/thu4"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.thu.get4().subject + @string/linefeed + viewModel.timetable.thu.get4().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.wed.fourth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.wed.fourth.room}"/>
 
-                    <TextView
-                        android:id="@+id/fri4"
-                        android:layout_width="match_parent"
+
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.fri.get4().subject + @string/linefeed + viewModel.timetable.fri.get4().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.thu.fourth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.thu.fourth.room}"/>
+
+
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:textSubject="@{viewModel.timetable.timetable.fri.fourth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.fri.fourth.room}"/>
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/mon4"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.mon.fourth.subject + @string/linefeed + viewModel.timetable.timetable.mon.fourth.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tue4"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.tue.fourth.subject + @string/linefeed + viewModel.timetable.timetable.tue.fourth.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/wed4"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.wed.fourth.subject + @string/linefeed + viewModel.timetable.timetable.wed.fourth.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/thu4"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.thu.fourth.subject + @string/linefeed + viewModel.timetable.timetable.thu.fourth.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/fri4"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.fri.fourth.subject + @string/linefeed + viewModel.timetable.timetable.fri.fourth.room}"-->
+<!--                        android:textSize="14sp" />-->
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/mon5"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.mon.get5().subject + @string/linefeed + viewModel.timetable.mon.get5().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.mon.fifth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.mon.fifth.room}"/>
 
-                    <TextView
-                        android:id="@+id/tue5"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.tue.get5().subject + @string/linefeed + viewModel.timetable.tue.get5().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.tue.fifth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.tue.fifth.room}"/>
 
-                    <TextView
-                        android:id="@+id/wed5"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.wed.get5().subject + @string/linefeed + viewModel.timetable.wed.get5().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.wed.fifth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.wed.fifth.room}"/>
 
-                    <TextView
-                        android:id="@+id/thu5"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.thu.get5().subject + @string/linefeed + viewModel.timetable.thu.get5().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.thu.fifth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.thu.fifth.room}"/>
 
-                    <TextView
-                        android:id="@+id/fri5"
-                        android:layout_width="match_parent"
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/border"
-                        android:text="@{viewModel.timetable.fri.get5().subject + @string/linefeed + viewModel.timetable.fri.get5().room}" />
+                        app:textSubject="@{viewModel.timetable.timetable.fri.fifth.subject}"
+                        app:textRoom="@{viewModel.timetable.timetable.fri.fifth.room}"/>
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/mon5"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.mon.fifth.subject + @string/linefeed + viewModel.timetable.timetable.mon.fifth.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tue5"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.tue.fifth.subject + @string/linefeed + viewModel.timetable.timetable.tue.fifth.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/wed5"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.wed.fifth.subject + @string/linefeed + viewModel.timetable.timetable.wed.fifth.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/thu5"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.thu.fifth.subject + @string/linefeed + viewModel.timetable.timetable.thu.fifth.room}"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/fri5"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/border"-->
+<!--                        android:gravity="center"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:text="@{viewModel.timetable.timetable.fri.fifth.subject + @string/linefeed + viewModel.timetable.timetable.fri.fifth.room}"-->
+<!--                        android:textSize="14sp" />-->
                 </TableRow>
 
 
