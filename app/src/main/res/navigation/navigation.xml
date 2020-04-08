@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_calendarFragment_to_dayDetailFragment"
             app:destination="@id/dayDetailFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_copyRightFragment"
+            app:destination="@id/copyRightFragment" />
 
     </fragment>
     <fragment
@@ -35,4 +38,8 @@
             app:argType="string" />
 
     </fragment>
+    <fragment
+        android:id="@+id/copyRightFragment"
+        android:name="com.gleam.kiwi.view.CopyRightFragment"
+        android:label="CopyRightFragment" />
 </navigation>

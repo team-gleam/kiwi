@@ -7,19 +7,19 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.gleam.kiwi.R
 
-class TaskDeleteDialogFragment(title: String) : DialogFragment() {
+class TaskDeleteDialogFragment(private val title: String) : DialogFragment() {
 
     var onDeleteClickListener: DialogInterface.OnClickListener? = null
     var onCancelClickListener: DialogInterface.OnClickListener? =
         DialogInterface.OnClickListener { _, _ -> }
-    private val message: String = title
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         val builder = AlertDialog.Builder(activity, R.style.DeleteDialogTheme)
         builder.setTitle("Delete Task")
-            .setMessage(message)
-            .setPositiveButton("delete", onDeleteClickListener)
-            .setNegativeButton("cancel", onCancelClickListener)
+            .setTitle(title)
+            .setPositiveButton("DELETE", onDeleteClickListener)
+            .setNegativeButton("CANCEL", onCancelClickListener)
 
         return builder.create()
     }

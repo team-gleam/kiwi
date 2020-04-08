@@ -28,6 +28,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.TextStyle
 import java.util.*
 
+
 class CalendarFragment : Fragment() {
     private val viewModel: CalendarViewModel by viewModel()
     private val today = LocalDate.now()
@@ -43,14 +44,6 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.daysContainTask.observe(
-            viewLifecycleOwner,
-            Observer { taskList: List<LocalDate>? ->
-                taskList?.forEach { task ->
-                    calendar.notifyDateChanged(task)
-                }
-            })
-
         setupDaysOfWeek()
         setupCalendar()
 
@@ -59,10 +52,23 @@ class CalendarFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        viewModel.daysContainTask.observe(
+            viewLifecycleOwner,
+            Observer { taskList: List<LocalDate>? ->
+                taskList?.forEach { task ->
+                    calendar.notifyDateChanged(task)
+                }
+            })
         // disable back key
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() = Unit
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateTaskList()
     }
 
     private fun setupDaysOfWeek() {
@@ -104,7 +110,6 @@ class CalendarFragment : Fragment() {
                     container.textView.apply {
                         text = date.dayOfMonth.toString()
                         setTextColorRes(R.color.white)
-
                         when {
                             day.owner == DayOwner.THIS_MONTH && day.date == today ->
                                 setBackgroundResource(R.drawable.today_bg)
@@ -112,8 +117,8 @@ class CalendarFragment : Fragment() {
                             else -> setTextColorRes(R.color.white_light)
                         }
                     }
-                    viewModel.daysContainTask.value?.let { dayTextsContainTask ->
-                        if (date in dayTextsContainTask) {
+                    viewModel.daysContainTask.value?.let { daysContainTask ->
+                        if (date in daysContainTask) {
                             container.view.notification_mark.setBackgroundResource(R.drawable.notification_yellow)
                         }
                     }

@@ -44,9 +44,6 @@ class DayDetailFragment : Fragment() {
             taskRegister()
         }
 
-        dayDetailViewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
-            tasks?.also { taskRecyclerAdapter.setTasks(it) }
-        })
 
         setBottomNavigationBar(false)
     }
@@ -64,16 +61,9 @@ class DayDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        observeViewModel(dayDetailViewModel)
-    }
-
-    private fun observeViewModel(viewModel: DayDetailViewModel) {
-        viewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
-            tasks?.let {
-                taskRecyclerAdapter.setTasks(it)
-            }
-        }
-        )
+        dayDetailViewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
+            tasks?.let { taskRecyclerAdapter.setTasks(it) }
+        })
     }
 
     private fun taskRegister() {
