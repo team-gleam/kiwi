@@ -1,8 +1,6 @@
 package com.gleam.kiwi.view
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +35,7 @@ class TimetableFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.timetable?.observe(viewLifecycleOwner, Observer { timetable ->
-            timetable?.also{
+            timetable.also {
 
             }
         })
@@ -46,5 +44,6 @@ class TimetableFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }
+
 
 }

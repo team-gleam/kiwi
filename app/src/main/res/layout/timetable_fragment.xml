@@ -147,8 +147,7 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/calendar_bg"
-                android:stretchColumns="*">
+                android:background="@color/calendar_bg">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -162,7 +161,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/border"
                         app:textSubject="@{viewModel.timetable.timetable.mon.first.subject}"
-                        app:textRoom="@{viewModel.timetable.timetable.mon.first.room}"/>
+                        app:textRoom="@{viewModel.timetable.timetable.mon.first.room}" />
 
 
                     <include
