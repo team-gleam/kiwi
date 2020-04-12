@@ -64,13 +64,7 @@ class CalendarFragment : Fragment() {
             override fun handleOnBackPressed() = Unit
         })
     }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.updateTaskList()
-        calendar.notifyCalendarChanged()
-    }
-
+    
     private fun setupDaysOfWeek() {
         day_of_week.children.mapNotNull { it as? TextView }
             .forEachIndexed { index, textView ->
