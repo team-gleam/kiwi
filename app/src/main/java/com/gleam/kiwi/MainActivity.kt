@@ -16,5 +16,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.myNavHostFragment)
         setupWithNavController(bottom_navigation, navController)
     }
+
 }
 

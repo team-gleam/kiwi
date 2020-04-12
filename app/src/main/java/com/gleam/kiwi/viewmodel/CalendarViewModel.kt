@@ -8,7 +8,6 @@ import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.net.KiwiClient
 import com.gleam.kiwi.net.NetworkStatusWithTasks
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -40,9 +39,7 @@ class CalendarViewModel(private val client: KiwiClient) : ViewModel() {
     }
 
     fun updateTaskList() {
-        runBlocking {
-            setTaskList()
-        }
+        setTaskList()
     }
 
     private fun setDaysContainTask() {

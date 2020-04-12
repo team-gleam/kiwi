@@ -46,7 +46,6 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupDaysOfWeek()
         setupCalendar()
-
         setBottomNavigationBar(true)
     }
 
@@ -69,6 +68,7 @@ class CalendarFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.updateTaskList()
+        calendar.notifyCalendarChanged()
     }
 
     private fun setupDaysOfWeek() {
@@ -86,7 +86,6 @@ class CalendarFragment : Fragment() {
         val currentMonth = YearMonth.now()
         val oldestMonth = currentMonth.minusMonths(12)
         val newestMonth = currentMonth.plusMonths(12)
-
         with(calendar) {
             setup(oldestMonth, newestMonth, SORTED_DAYS_OF_WEEK.first())
             scrollToMonth(currentMonth)

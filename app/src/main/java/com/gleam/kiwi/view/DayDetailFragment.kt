@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gleam.kiwi.R
@@ -44,7 +46,6 @@ class DayDetailFragment : Fragment() {
             taskRegister()
         }
 
-
         setBottomNavigationBar(false)
     }
 
@@ -63,6 +64,11 @@ class DayDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         dayDetailViewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
             tasks?.let { taskRecyclerAdapter.setTasks(it) }
+        })
+        // disable back key and nav to calendar
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() =
+                findNavController().navigate(R.id.action_dayDetailFragment_to_calendarFragment)
         })
     }
 
