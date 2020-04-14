@@ -13,43 +13,43 @@ data class Structure(
 )
 
 data class Mon(
-    val first: Details?,
-    val second: Details?,
-    val third: Details?,
-    val fourth: Details?,
-    val fifth: Details?
+    var first: Details?,
+    var second: Details?,
+    var third: Details?,
+    var fourth: Details?,
+    var fifth: Details?
 )
 
 data class Tue(
-    val first: Details?,
-    val second: Details?,
-    val third: Details?,
-    val fourth: Details?,
-    val fifth: Details?
+    var first: Details?,
+    var second: Details?,
+    var third: Details?,
+    var fourth: Details?,
+    var fifth: Details?
 )
 
 data class Wed(
-    val first: Details?,
-    val second: Details?,
-    val third: Details?,
-    val fourth: Details?,
-    val fifth: Details?
+    var first: Details?,
+    var second: Details?,
+    var third: Details?,
+    var fourth: Details?,
+    var fifth: Details?
 )
 
 data class Thu(
-    val first: Details?,
-    val second: Details?,
-    val third: Details?,
-    val fourth: Details?,
-    val fifth: Details?
+    var first: Details?,
+    var second: Details?,
+    var third: Details?,
+    var fourth: Details?,
+    var fifth: Details?
 )
 
 data class Fri(
-    val first: Details?,
-    val second: Details?,
-    val third: Details?,
-    val fourth: Details?,
-    val fifth: Details?
+    var first: Details?,
+    var second: Details?,
+    var third: Details?,
+    var fourth: Details?,
+    var fifth: Details?
 )
 
 data class Details(

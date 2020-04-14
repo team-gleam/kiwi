@@ -18,4 +18,6 @@
     <string name="_4">"  4  "</string>
     <string name="_5">"  5  "</string>
     <string name="linefeed">\n</string>
+    <string name="room">Room</string>
+    <string name="subject">Subject</string>
 </resources>

@@ -2,12 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.viewModel.timetable.timetable.ragment">
+    tools:context=".view.viewModel.timetable.timetable.fragment">
 
     <!-- Binding Objects -->
     <data>
         <variable name="viewModel" type="com.gleam.kiwi.viewmodel.TimetableViewModel" />
+        <variable
+            name="handlers"
+            type="com.gleam.kiwi.view.TimetableEventHandlers" />
         <import type="android.view.View"/>
+        <import type="com.gleam.kiwi.view.TimetableEnum"/>
     </data>
 
 
@@ -160,9 +164,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON1)}"
                         app:textSubject="@{viewModel.timetable.timetable.mon.first.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.mon.first.room}" />
-
 
                     <include
                         layout="@layout/timetable_cell"
@@ -170,6 +174,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE1)}"
                         app:textSubject="@{viewModel.timetable.timetable.tue.first.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.tue.first.room}"/>
 
@@ -179,6 +184,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED1)}"
                         app:textSubject="@{viewModel.timetable.timetable.wed.first.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.wed.first.room}"/>
 
@@ -188,6 +194,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU1)}"
                         app:textSubject="@{viewModel.timetable.timetable.thu.first.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.thu.first.room}"/>
 
@@ -196,66 +203,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI1)}"
                         app:textSubject="@{viewModel.timetable.timetable.fri.first.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.fri.first.room}"/>
 
-
-
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/mon1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.mon.first.subject + @string/linefeed + viewModel.timetable.timetable.mon.first.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tue1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.tue.first.subject + @string/linefeed + viewModel.timetable.timetable.tue.first.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/wed1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.wed.first.subject + @string/linefeed + viewModel.timetable.timetable.wed.first.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/thu1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.thu.first.subject + @string/linefeed + viewModel.timetable.timetable.thu.first.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/fri1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.fri.first.subject + @string/linefeed + viewModel.timetable.timetable.fri.first.room}"-->
-<!--                        android:textSize="14sp" />-->
 
                 </TableRow>
 
@@ -270,6 +221,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON2)}"
                         app:textSubject="@{viewModel.timetable.timetable.mon.second.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.mon.second.room}"/>
 
@@ -278,6 +230,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE2)}"
                         app:textSubject="@{viewModel.timetable.timetable.tue.second.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.tue.second.room}"/>
 
@@ -286,6 +239,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED2)}"
                         app:textSubject="@{viewModel.timetable.timetable.wed.second.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.wed.second.room}"/>
 
@@ -294,6 +248,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU2)}"
                         app:textSubject="@{viewModel.timetable.timetable.thu.second.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.thu.second.room}"/>
 
@@ -302,65 +257,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI2)}"
                         app:textSubject="@{viewModel.timetable.timetable.fri.second.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.fri.second.room}"/>
 
-
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/mon2"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.mon.second.subject + @string/linefeed + viewModel.timetable.timetable.mon.second.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tue2"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.tue.second.subject + @string/linefeed + viewModel.timetable.timetable.tue.second.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/wed2"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.wed.second.subject + @string/linefeed + viewModel.timetable.timetable.wed.second.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/thu2"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.thu.second.subject + @string/linefeed + viewModel.timetable.timetable.thu.second.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/fri2"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.fri.second.subject + @string/linefeed + viewModel.timetable.timetable.fri.second.room}"-->
-<!--                        android:textSize="14sp" />-->
                 </TableRow>
 
                 <TableRow
@@ -373,6 +273,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON3)}"
                         app:textSubject="@{viewModel.timetable.timetable.mon.third.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.mon.third.room}"/>
 
@@ -381,6 +282,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE3)}"
                         app:textSubject="@{viewModel.timetable.timetable.tue.third.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.tue.third.room}"/>
 
@@ -390,6 +292,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED3)}"
                         app:textSubject="@{viewModel.timetable.timetable.wed.third.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.wed.third.room}"/>
 
@@ -399,6 +302,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU3)}"
                         app:textSubject="@{viewModel.timetable.timetable.thu.third.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.thu.third.room}"/>
 
@@ -409,63 +313,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI3)}"
                         app:textSubject="@{viewModel.timetable.timetable.fri.third.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.fri.third.room}"/>
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/mon3"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.mon.third.subject + @string/linefeed + viewModel.timetable.timetable.mon.third.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tue3"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.tue.third.subject + @string/linefeed + viewModel.timetable.timetable.tue.third.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/wed3"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.wed.third.subject + @string/linefeed + viewModel.timetable.timetable.wed.third.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/thu3"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.thu.third.subject + @string/linefeed + viewModel.timetable.timetable.thu.third.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/fri3"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.fri.third.subject + @string/linefeed + viewModel.timetable.timetable.fri.third.room}"-->
-<!--                        android:textSize="14sp" />-->
                 </TableRow>
 
                 <TableRow
@@ -478,6 +329,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON4)}"
                         app:textSubject="@{viewModel.timetable.timetable.mon.fourth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.mon.fourth.room}"/>
 
@@ -486,6 +338,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE4)}"
                         app:textSubject="@{viewModel.timetable.timetable.tue.fourth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.tue.fourth.room}"/>
 
@@ -495,6 +348,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED4)}"
                         app:textSubject="@{viewModel.timetable.timetable.wed.fourth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.wed.fourth.room}"/>
 
@@ -504,6 +358,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU4)}"
                         app:textSubject="@{viewModel.timetable.timetable.thu.fourth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.thu.fourth.room}"/>
 
@@ -513,63 +368,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI4)}"
                         app:textSubject="@{viewModel.timetable.timetable.fri.fourth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.fri.fourth.room}"/>
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/mon4"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.mon.fourth.subject + @string/linefeed + viewModel.timetable.timetable.mon.fourth.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tue4"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.tue.fourth.subject + @string/linefeed + viewModel.timetable.timetable.tue.fourth.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/wed4"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.wed.fourth.subject + @string/linefeed + viewModel.timetable.timetable.wed.fourth.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/thu4"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.thu.fourth.subject + @string/linefeed + viewModel.timetable.timetable.thu.fourth.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/fri4"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.fri.fourth.subject + @string/linefeed + viewModel.timetable.timetable.fri.fourth.room}"-->
-<!--                        android:textSize="14sp" />-->
                 </TableRow>
 
                 <TableRow
@@ -582,6 +384,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON5)}"
                         app:textSubject="@{viewModel.timetable.timetable.mon.fifth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.mon.fifth.room}"/>
 
@@ -590,6 +393,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE5)}"
                         app:textSubject="@{viewModel.timetable.timetable.tue.fifth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.tue.fifth.room}"/>
 
@@ -598,6 +402,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED5)}"
                         app:textSubject="@{viewModel.timetable.timetable.wed.fifth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.wed.fifth.room}"/>
 
@@ -606,6 +411,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU5)}"
                         app:textSubject="@{viewModel.timetable.timetable.thu.fifth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.thu.fifth.room}"/>
 
@@ -614,63 +420,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onLongClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI5)}"
                         app:textSubject="@{viewModel.timetable.timetable.fri.fifth.subject}"
                         app:textRoom="@{viewModel.timetable.timetable.fri.fifth.room}"/>
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/mon5"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.mon.fifth.subject + @string/linefeed + viewModel.timetable.timetable.mon.fifth.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tue5"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.tue.fifth.subject + @string/linefeed + viewModel.timetable.timetable.tue.fifth.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/wed5"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.wed.fifth.subject + @string/linefeed + viewModel.timetable.timetable.wed.fifth.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/thu5"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.thu.fifth.subject + @string/linefeed + viewModel.timetable.timetable.thu.fifth.room}"-->
-<!--                        android:textSize="14sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/fri5"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@drawable/border"-->
-<!--                        android:gravity="center"-->
-<!--                        android:maxLines="2"-->
-<!--                        android:text="@{viewModel.timetable.timetable.fri.fifth.subject + @string/linefeed + viewModel.timetable.timetable.fri.fifth.room}"-->
-<!--                        android:textSize="14sp" />-->
                 </TableRow>
 
 
