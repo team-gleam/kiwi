@@ -1,20 +1,16 @@
 package com.gleam.kiwi.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gleam.kiwi.model.Details
-import com.gleam.kiwi.model.Structure
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.net.*
 import com.gleam.kiwi.view.TimetableEnum
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
 
-class TimetableViewModel : ViewModel() {
-    private lateinit var client: KiwiClient
+class TimetableViewModel(private val client: KiwiClient): ViewModel() {
     private var _timetable: MutableLiveData<Timetable>? = MutableLiveData()
     val timetable: LiveData<Timetable>?
         get(){
@@ -27,9 +23,7 @@ class TimetableViewModel : ViewModel() {
 
     private fun loadTimetable() {
         viewModelScope.launch {
-            client = KiwiClient(KiwiService().create(KiwiServiceInterFace::class.java))
             val res = client.getTimetable()
-
             _timetable?.value = when(res){
                 is NetworkStatusWithTimeTable.Success -> res.timetable
                 else -> null
@@ -47,7 +41,6 @@ class TimetableViewModel : ViewModel() {
 
     private fun getNewTimetable(dayOfWeek: TimetableEnum, detail: Details): Timetable{
         var newTimetable: Timetable = timetable?.value!!
-        Log.d("DEBUG",newTimetable.toString())
         when(dayOfWeek){
             TimetableEnum.MON1 -> newTimetable.timetable.mon.first = detail
             TimetableEnum.MON2 -> newTimetable.timetable.mon.second = detail

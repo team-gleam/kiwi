@@ -1,8 +1,6 @@
 package com.gleam.kiwi.view
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,18 +13,16 @@ import com.gleam.kiwi.R
 import com.gleam.kiwi.databinding.TimetableFragmentBinding
 import com.gleam.kiwi.model.Details
 import com.gleam.kiwi.viewmodel.TimetableViewModel
-import kotlinx.android.synthetic.main.calendar_base.*
-import kotlinx.android.synthetic.main.timetable_cell.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class TimetableFragment : Fragment(),TimetableEventHandlers,
+class TimetableFragment() : Fragment(),TimetableEventHandlers,
     TimetableRegisterDialogFragment.TimetableRegisterDialogListener{
 
-    private lateinit var viewModel: TimetableViewModel
+    private val viewModel: TimetableViewModel by viewModel()
     private lateinit var timetableFragmentBinding: TimetableFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = TimetableViewModel()
     }
 
     override fun onCreateView(
