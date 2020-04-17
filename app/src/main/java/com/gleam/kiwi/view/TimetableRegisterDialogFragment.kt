@@ -10,10 +10,9 @@ import androidx.fragment.app.DialogFragment
 import com.gleam.kiwi.R
 import com.gleam.kiwi.model.Details
 
-class TimetableRegisterDialogFragment(dayOfWeek: TimetableEnum) : DialogFragment() {
+class TimetableRegisterDialogFragment(private val dayOfWeek: TimetableEnum) : DialogFragment() {
 
     private lateinit var listener: TimetableRegisterDialogListener
-    private val _dayOfWeek: TimetableEnum = dayOfWeek
 
     interface TimetableRegisterDialogListener {
         fun onRegisterClick(dialog: DialogFragment, detail: Details, dayOfWeek: TimetableEnum)
@@ -29,9 +28,8 @@ class TimetableRegisterDialogFragment(dayOfWeek: TimetableEnum) : DialogFragment
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            // Build the dialog and set up the button click handlers
             val builder = AlertDialog.Builder(activity, R.style.DialogTheme)
-            val registerView = activity!!.layoutInflater.inflate(R.layout.timetable_register_dialog_fragment, null)
+            val registerView = it.layoutInflater.inflate(R.layout.timetable_register_dialog_fragment, null)
 
             builder.setView(registerView)
                 .setTitle("Register subject")
@@ -39,7 +37,7 @@ class TimetableRegisterDialogFragment(dayOfWeek: TimetableEnum) : DialogFragment
                     DialogInterface.OnClickListener { dialog, id ->
                         var detail = Details(registerView.findViewById<EditText>(R.id.subject).text.toString(),
                                             registerView.findViewById<EditText>(R.id.room).text.toString())
-                        listener.onRegisterClick(this, detail, _dayOfWeek)
+                        listener.onRegisterClick(this, detail, dayOfWeek)
                     })
                 .setNegativeButton("cancel") { _, _ -> }
 

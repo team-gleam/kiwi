@@ -7,46 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
-
+import org.koin.android.viewmodel.ext.android.viewModel
 import com.gleam.kiwi.R
 import com.gleam.kiwi.databinding.TimetableFragmentBinding
 import com.gleam.kiwi.model.Details
 import com.gleam.kiwi.viewmodel.TimetableViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class TimetableFragment() : Fragment(),TimetableEventHandlers,
     TimetableRegisterDialogFragment.TimetableRegisterDialogListener{
 
-    private val viewModel: TimetableViewModel by viewModel()
+    private val timetableViewModel: TimetableViewModel by viewModel()
     private lateinit var timetableFragmentBinding: TimetableFragmentBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         timetableFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.timetable_fragment, container, false)
-        timetableFragmentBinding.viewModel = viewModel
-        timetableFragmentBinding.handlers = this
+        timetableFragmentBinding.apply {
+            viewModel = timetableViewModel
+            handlers = this@TimetableFragment
+            lifecycleOwner = viewLifecycleOwner
+        }
+      
         return timetableFragmentBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.timetable?.observe(viewLifecycleOwner, Observer { timetable ->
-            timetable.also {
-
-            }
-        })
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onClick(view: View, dayOfWeek: TimetableEnum) : Boolean {
@@ -55,7 +40,7 @@ class TimetableFragment() : Fragment(),TimetableEventHandlers,
     }
 
     override fun onRegisterClick(dialog: DialogFragment, detail: Details, dayOfWeek: TimetableEnum) {
-        viewModel.registerSubject(dayOfWeek, detail)
+        timetableViewModel.registerSubject(dayOfWeek, detail)
     }
 
 }

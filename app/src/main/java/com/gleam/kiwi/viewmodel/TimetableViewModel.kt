@@ -11,8 +11,8 @@ import com.gleam.kiwi.view.TimetableEnum
 import kotlinx.coroutines.launch
 
 class TimetableViewModel(private val client: KiwiClient): ViewModel() {
-    private var _timetable: MutableLiveData<Timetable>? = MutableLiveData()
-    val timetable: LiveData<Timetable>?
+    private var _timetable: MutableLiveData<Timetable?> = MutableLiveData()
+    val timetable: LiveData<Timetable?>
         get(){
             return _timetable
         }
@@ -24,11 +24,10 @@ class TimetableViewModel(private val client: KiwiClient): ViewModel() {
     private fun loadTimetable() {
         viewModelScope.launch {
             val res = client.getTimetable()
-            _timetable?.value = when(res){
+            _timetable.value = when(res){
                 is NetworkStatusWithTimeTable.Success -> res.timetable
                 else -> null
             }
-
         }
     }
 
@@ -40,7 +39,7 @@ class TimetableViewModel(private val client: KiwiClient): ViewModel() {
     }
 
     private fun getNewTimetable(dayOfWeek: TimetableEnum, detail: Details): Timetable{
-        var newTimetable: Timetable = timetable?.value!!
+        var newTimetable: Timetable = timetable.value!!
         when(dayOfWeek){
             TimetableEnum.MON1 -> newTimetable.timetable.mon.first = detail
             TimetableEnum.MON2 -> newTimetable.timetable.mon.second = detail
