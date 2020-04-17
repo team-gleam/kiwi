@@ -15,7 +15,7 @@ class TaskDeleteDialogFragment(title: String) : DialogFragment() {
     private val message: String = title
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity, R.style.DeleteDialogTheme)
+        val builder = AlertDialog.Builder(activity, R.style.DialogTheme)
         builder.setTitle("Delete Task")
             .setMessage(message)
             .setPositiveButton("delete", onDeleteClickListener)

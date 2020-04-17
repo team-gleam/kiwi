@@ -16,7 +16,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light"/>
 
 
-    <style name="DeleteDialogTheme" parent="android:Theme.DeviceDefault.Dialog.Alert">
+    <style name="DialogTheme" parent="android:Theme.DeviceDefault.Dialog.Alert">
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:background">@color/light_bg</item>
     </style>

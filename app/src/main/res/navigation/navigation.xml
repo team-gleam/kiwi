@@ -5,6 +5,8 @@
     android:id="@+id/navigation"
     app:startDestination="@id/loginFragment">
 
+
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.gleam.kiwi.view.LoginFragment"
@@ -35,4 +37,8 @@
             app:argType="string" />
 
     </fragment>
+    <fragment
+        android:id="@+id/timetableFragment"
+        android:name="com.gleam.kiwi.view.TimetableFragment"
+        android:label="TimetableFragment" />
 </navigation>
