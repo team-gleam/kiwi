@@ -38,10 +38,6 @@ class CalendarViewModel(private val client: KiwiClient) : ViewModel() {
         }
     }
 
-    fun updateTaskList() {
-        setTaskList()
-    }
-
     private fun setDaysContainTask() {
         _daysContainTask.value =
             taskList?.tasks?.map { t -> LocalDate.parse(t.date, DateTimeFormatter.ISO_DATE) }
