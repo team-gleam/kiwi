@@ -6,6 +6,7 @@ import com.gleam.kiwi.net.KiwiService
 import com.gleam.kiwi.net.KiwiServiceInterFace
 import com.gleam.kiwi.viewmodel.CalendarViewModel
 import com.gleam.kiwi.viewmodel.LoginViewModel
+import com.gleam.kiwi.viewmodel.TimetableViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -15,6 +16,7 @@ class Application : Application() {
     private val module = module {
         viewModel { LoginViewModel(get()) }
         viewModel { CalendarViewModel(get()) }
+        viewModel { TimetableViewModel(get()) }
         single { KiwiService().create(KiwiServiceInterFace::class.java) }
         single { KiwiClient(get()) }
     }

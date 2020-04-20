@@ -49,4 +49,8 @@
         android:id="@+id/copyRightFragment"
         android:name="com.gleam.kiwi.view.CopyRightFragment"
         android:label="CopyRightFragment" />
+    <fragment
+        android:id="@+id/timetableFragment"
+        android:name="com.gleam.kiwi.view.TimetableFragment"
+        android:label="TimetableFragment" />
 </navigation>

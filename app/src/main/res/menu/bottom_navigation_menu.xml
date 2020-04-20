@@ -5,6 +5,10 @@
         android:icon="@drawable/ic_today_white_24dp"
         android:title="@string/bottom_nav_text_calendar" />
     <item
+        android:id="@+id/timetableFragment"
+        android:icon="@drawable/ic_event_note_black_24dp"
+        android:title="@string/timetable"/>
+    <item
         android:id="@+id/copyRightFragment"
         android:icon="@drawable/ic_copyright_white_24dp"
         android:title="@string/bottom_nav_text_copyright" />
