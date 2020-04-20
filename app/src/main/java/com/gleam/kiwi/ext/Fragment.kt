@@ -10,6 +10,6 @@ fun Fragment.setBottomNavigationBar(visible: Boolean) {
         if (visible) {
             View.VISIBLE
         } else {
-            View.INVISIBLE
+            View.GONE
         }
 }
