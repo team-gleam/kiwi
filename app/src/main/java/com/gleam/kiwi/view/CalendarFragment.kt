@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.gleam.kiwi.R
+import com.gleam.kiwi.ext.setBottomNavigationBar
 import com.gleam.kiwi.ext.setTextColorRes
 import com.gleam.kiwi.viewmodel.CalendarViewModel
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -27,6 +28,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.TextStyle
 import java.util.*
 
+
 class CalendarFragment : Fragment() {
     private val viewModel: CalendarViewModel by viewModel()
     private val today = LocalDate.now()
@@ -42,6 +44,14 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupDaysOfWeek()
+        setupCalendar()
+        setBottomNavigationBar(true)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         viewModel.daysContainTask.observe(
             viewLifecycleOwner,
             Observer { taskList: List<LocalDate>? ->
@@ -49,19 +59,12 @@ class CalendarFragment : Fragment() {
                     calendar.notifyDateChanged(task)
                 }
             })
-
-        setupDaysOfWeek()
-        setupCalendar()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         // disable back key
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() = Unit
         })
     }
-
+    
     private fun setupDaysOfWeek() {
         day_of_week.children.mapNotNull { it as? TextView }
             .forEachIndexed { index, textView ->
@@ -77,7 +80,6 @@ class CalendarFragment : Fragment() {
         val currentMonth = YearMonth.now()
         val oldestMonth = currentMonth.minusMonths(12)
         val newestMonth = currentMonth.plusMonths(12)
-
         with(calendar) {
             setup(oldestMonth, newestMonth, SORTED_DAYS_OF_WEEK.first())
             scrollToMonth(currentMonth)
@@ -101,7 +103,6 @@ class CalendarFragment : Fragment() {
                     container.textView.apply {
                         text = date.dayOfMonth.toString()
                         setTextColorRes(R.color.white)
-
                         when {
                             day.owner == DayOwner.THIS_MONTH && day.date == today ->
                                 setBackgroundResource(R.drawable.today_bg)
@@ -109,8 +110,8 @@ class CalendarFragment : Fragment() {
                             else -> setTextColorRes(R.color.white_light)
                         }
                     }
-                    viewModel.daysContainTask.value?.let { dayTextsContainTask ->
-                        if (date in dayTextsContainTask) {
+                    viewModel.daysContainTask.value?.let { daysContainTask ->
+                        if (date in daysContainTask) {
                             container.view.notification_mark.setBackgroundResource(R.drawable.notification_yellow)
                         }
                     }

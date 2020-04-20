@@ -1,12 +1,10 @@
 package com.gleam.kiwi.net
 
-import android.util.Log
 import com.gleam.kiwi.model.Task
 import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User
 import java.net.SocketTimeoutException
-import java.sql.Time
 
 interface KiwiClientInterface {
     suspend fun signUp(user: User): NetworkStatus
@@ -23,7 +21,6 @@ interface KiwiClientInterface {
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
     private lateinit var token: String
-
     override suspend fun signUp(user: User): NetworkStatus {
         return try {
             when (kiwiService.signUp(user).code()) {

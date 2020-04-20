@@ -5,8 +5,6 @@
     android:id="@+id/navigation"
     app:startDestination="@id/loginFragment">
 
-
-
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.gleam.kiwi.view.LoginFragment"
@@ -14,7 +12,9 @@
         tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_calendarFragment"
-            app:destination="@id/calendarFragment" />
+            app:destination="@id/calendarFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
@@ -23,8 +23,14 @@
         tools:layout="@layout/calendar_fragment">
         <action
             android:id="@+id/action_calendarFragment_to_dayDetailFragment"
-            app:destination="@id/dayDetailFragment" />
-
+            app:destination="@id/dayDetailFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_calendarFragment_to_copyRightFragment"
+            app:destination="@id/copyRightFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/dayDetailFragment"
@@ -35,8 +41,14 @@
         <argument
             android:name="content"
             app:argType="string" />
-
+        <action
+            android:id="@+id/action_dayDetailFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/copyRightFragment"
+        android:name="com.gleam.kiwi.view.CopyRightFragment"
+        android:label="CopyRightFragment" />
     <fragment
         android:id="@+id/timetableFragment"
         android:name="com.gleam.kiwi.view.TimetableFragment"

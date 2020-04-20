@@ -6,6 +6,13 @@
     <string name="password">Password</string>
     <string name="register">REGISTER</string>
     <string name="input_new_task">input new task</string>
+    <string name="bottom_nav_text_calendar">Calendar</string>
+    <string name="bottom_nav_text_copyright">CopyRight</string>
+    <string name="copyright">CopyRight</string>
+    <string name="app">App</string>
+    <string name="app_author">narupi\nIndex197511\nBlackBracken</string>
+    <string name="api">API</string>
+    <string name="api_author">4afS</string>
     <string name="wed">Wed</string>
     <string name="thu">Thu</string>
     <string name="fri">Fri</string>
@@ -20,4 +27,5 @@
     <string name="linefeed">\n</string>
     <string name="room">Room</string>
     <string name="subject">Subject</string>
+    <string name="timetable">Timetable</string>
 </resources>

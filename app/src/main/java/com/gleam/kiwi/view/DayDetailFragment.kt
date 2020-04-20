@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gleam.kiwi.R
+import com.gleam.kiwi.ext.setBottomNavigationBar
 import com.gleam.kiwi.view.recycler.TaskRecyclerAdapter
 import com.gleam.kiwi.viewmodel.DayDetailViewModel
 import kotlinx.android.synthetic.main.day_detail_fragment.*
@@ -43,9 +46,7 @@ class DayDetailFragment : Fragment() {
             taskRegister()
         }
 
-        dayDetailViewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
-            tasks?.also { taskRecyclerAdapter.setTasks(it) }
-        })
+        setBottomNavigationBar(false)
     }
 
     private fun onItemClick(position: Int) {
@@ -61,16 +62,14 @@ class DayDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        observeViewModel(dayDetailViewModel)
-    }
-
-    private fun observeViewModel(viewModel: DayDetailViewModel) {
-        viewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
-            tasks?.let {
-                taskRecyclerAdapter.setTasks(it)
-            }
-        }
-        )
+        dayDetailViewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
+            tasks?.let { taskRecyclerAdapter.setTasks(it) }
+        })
+        // disable back key and nav to calendar
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() =
+                findNavController().navigate(R.id.action_dayDetailFragment_to_calendarFragment)
+        })
     }
 
     private fun taskRegister() {

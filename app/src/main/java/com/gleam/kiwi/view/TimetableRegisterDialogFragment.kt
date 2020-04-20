@@ -3,7 +3,6 @@ package com.gleam.kiwi.view
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
@@ -22,23 +21,28 @@ class TimetableRegisterDialogFragment(private val dayOfWeek: TimetableEnum) : Di
         super.onAttach(context)
         when {
             context is TimetableRegisterDialogListener -> listener = context
-            parentFragment is TimetableRegisterDialogListener -> listener = parentFragment as TimetableRegisterDialogListener
+            parentFragment is TimetableRegisterDialogListener -> listener =
+                parentFragment as TimetableRegisterDialogListener
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(activity, R.style.DialogTheme)
-            val registerView = it.layoutInflater.inflate(R.layout.timetable_register_dialog_fragment, null)
+            val registerView =
+                it.layoutInflater.inflate(R.layout.timetable_register_dialog_fragment, null)
 
             builder.setView(registerView)
-                .setTitle("Register subject")
-                .setPositiveButton("register",
-                    DialogInterface.OnClickListener { dialog, id ->
-                        var detail = Details(registerView.findViewById<EditText>(R.id.subject).text.toString(),
-                                            registerView.findViewById<EditText>(R.id.room).text.toString())
-                        listener.onRegisterClick(this, detail, dayOfWeek)
-                    })
+                .setTitle("New subject")
+                .setPositiveButton(
+                    "register"
+                ) { _, _ ->
+                    val detail = Details(
+                        registerView.findViewById<EditText>(R.id.subject).text.toString(),
+                        registerView.findViewById<EditText>(R.id.room).text.toString()
+                    )
+                    listener.onRegisterClick(this, detail, dayOfWeek)
+                }
                 .setNegativeButton("cancel") { _, _ -> }
 
             builder.create()
