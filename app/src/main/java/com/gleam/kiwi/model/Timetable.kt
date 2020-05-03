@@ -54,5 +54,6 @@ data class Fri(
 
 data class Details(
     val subject: String,
-    val room: String?
+    val room: String?,
+    val memo: String?
 )

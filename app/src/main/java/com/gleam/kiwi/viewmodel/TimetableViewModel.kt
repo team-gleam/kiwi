@@ -73,4 +73,38 @@ class TimetableViewModel(private val client: KiwiClient) : ViewModel() {
             TimetableEnum.FRI5 -> timetable.value?.timetable?.fri?.fifth = detail
         }
     }
+
+    fun extractMemoFromTimetable(dayOfWeek: TimetableEnum): String? {
+        return when (dayOfWeek) {
+            TimetableEnum.MON1 -> timetable.value?.timetable?.mon?.first?.memo
+            TimetableEnum.MON2 -> timetable.value?.timetable?.mon?.second?.memo
+            TimetableEnum.MON3 -> timetable.value?.timetable?.mon?.third?.memo
+            TimetableEnum.MON4 -> timetable.value?.timetable?.mon?.fourth?.memo
+            TimetableEnum.MON5 -> timetable.value?.timetable?.mon?.fifth?.memo
+
+            TimetableEnum.TUE1 -> timetable.value?.timetable?.tue?.first?.memo
+            TimetableEnum.TUE2 -> timetable.value?.timetable?.tue?.second?.memo
+            TimetableEnum.TUE3 -> timetable.value?.timetable?.tue?.third?.memo
+            TimetableEnum.TUE4 -> timetable.value?.timetable?.tue?.fourth?.memo
+            TimetableEnum.TUE5 -> timetable.value?.timetable?.tue?.fifth?.memo
+
+            TimetableEnum.WED1 -> timetable.value?.timetable?.wed?.first?.memo
+            TimetableEnum.WED2 -> timetable.value?.timetable?.wed?.second?.memo
+            TimetableEnum.WED3 -> timetable.value?.timetable?.wed?.third?.memo
+            TimetableEnum.WED4 -> timetable.value?.timetable?.wed?.fourth?.memo
+            TimetableEnum.WED5 -> timetable.value?.timetable?.wed?.fifth?.memo
+
+            TimetableEnum.THU1 -> timetable.value?.timetable?.thu?.first?.memo
+            TimetableEnum.THU2 -> timetable.value?.timetable?.thu?.second?.memo
+            TimetableEnum.THU3 -> timetable.value?.timetable?.thu?.third?.memo
+            TimetableEnum.THU4 -> timetable.value?.timetable?.thu?.fourth?.memo
+            TimetableEnum.THU5 -> timetable.value?.timetable?.thu?.fifth?.memo
+
+            TimetableEnum.FRI1 -> timetable.value?.timetable?.fri?.first?.memo
+            TimetableEnum.FRI2 -> timetable.value?.timetable?.fri?.second?.memo
+            TimetableEnum.FRI3 -> timetable.value?.timetable?.fri?.third?.memo
+            TimetableEnum.FRI4 -> timetable.value?.timetable?.fri?.fourth?.memo
+            TimetableEnum.FRI5 -> timetable.value?.timetable?.fri?.fifth?.memo
+        }
+    }
 }

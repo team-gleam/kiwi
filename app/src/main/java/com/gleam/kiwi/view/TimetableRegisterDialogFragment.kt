@@ -39,7 +39,8 @@ class TimetableRegisterDialogFragment(private val dayOfWeek: TimetableEnum) : Di
                 ) { _, _ ->
                     val detail = Details(
                         registerView.findViewById<EditText>(R.id.subject).text.toString(),
-                        registerView.findViewById<EditText>(R.id.room).text.toString()
+                        registerView.findViewById<EditText>(R.id.room).text.toString(),
+                        registerView.findViewById<EditText>(R.id.memo).text.toString()
                     )
                     listener.onRegisterClick(this, detail, dayOfWeek)
                 }

@@ -35,10 +35,18 @@ class TimetableFragment : Fragment(), TimetableEventHandlers,
         return timetableFragmentBinding.root
     }
 
-    override fun onClick(view: View, dayOfWeek: TimetableEnum): Boolean {
+    override fun onLongClick(view: View, dayOfWeek: TimetableEnum): Boolean {
         TimetableRegisterDialogFragment(dayOfWeek).show(
             childFragmentManager,
             "TimetableRegisterDialog"
+        )
+        return true
+    }
+
+    override fun onClick(view: View, dayOfWeek: TimetableEnum): Boolean {
+        TimetableMemoDialogFragment(timetableViewModel.extractMemoFromTimetable(dayOfWeek)).show(
+            childFragmentManager,
+            "TimetableMemoDialog"
         )
         return true
     }
