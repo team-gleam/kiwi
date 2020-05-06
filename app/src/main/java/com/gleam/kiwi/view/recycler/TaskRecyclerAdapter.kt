@@ -24,9 +24,7 @@ class TaskRecyclerAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return taskList.size
-    }
+    override fun getItemCount() = taskList.size
 
     fun setTasks(tasks: List<Task>) {
         this.taskList = tasks
@@ -34,15 +32,16 @@ class TaskRecyclerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskRecyclerViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.task_list_cell, parent, false)
-            .apply {
-                setOnClickListener { view ->
-                    onItemCLick(
-                        recyclerView.getChildAdapterPosition(view)
-                    )
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.task_list_cell, parent, false)
+                .apply {
+                    setOnClickListener { view ->
+                        onItemCLick(
+                            recyclerView.getChildAdapterPosition(view)
+                        )
+                    }
                 }
-            }
 
         return TaskRecyclerViewHolder(view)
     }

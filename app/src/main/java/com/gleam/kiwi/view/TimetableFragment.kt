@@ -9,12 +9,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.gleam.kiwi.R
 import com.gleam.kiwi.databinding.TimetableFragmentBinding
+import com.gleam.kiwi.ext.disableBackKey
 import com.gleam.kiwi.model.Details
+import com.gleam.kiwi.view.TimetableRegisterDialogFragment.TimetableRegisterDialogListener
 import com.gleam.kiwi.viewmodel.TimetableViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class TimetableFragment : Fragment(), TimetableEventHandlers,
-    TimetableRegisterDialogFragment.TimetableRegisterDialogListener {
+    TimetableRegisterDialogListener {
 
     private val timetableViewModel: TimetableViewModel by viewModel()
     private lateinit var timetableFragmentBinding: TimetableFragmentBinding
@@ -25,14 +27,19 @@ class TimetableFragment : Fragment(), TimetableEventHandlers,
         savedInstanceState: Bundle?
     ): View? {
         timetableFragmentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.timetable_fragment, container, false)
-        timetableFragmentBinding.apply {
-            viewModel = timetableViewModel
-            handlers = this@TimetableFragment
-            lifecycleOwner = viewLifecycleOwner
-        }
-
+            DataBindingUtil.inflate<TimetableFragmentBinding>(
+                inflater, R.layout.timetable_fragment, container, false
+            ).also {
+                it.viewModel = timetableViewModel
+                it.handlers = this@TimetableFragment
+                it.lifecycleOwner = viewLifecycleOwner
+            }
         return timetableFragmentBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        disableBackKey()
     }
 
     override fun onLongClick(view: View, dayOfWeek: TimetableEnum): Boolean {

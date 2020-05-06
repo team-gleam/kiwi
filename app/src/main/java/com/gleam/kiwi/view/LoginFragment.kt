@@ -27,8 +27,8 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sign_in.setOnClickListener { signIn() }
-        sign_up.setOnClickListener { signUp() }
+        button_signIn.setOnClickListener { signIn() }
+        button_signUp.setOnClickListener { signUp() }
         viewModel.loginStatus.observe(viewLifecycleOwner, Observer { status ->
             loginStatusDistributor(status)
         })

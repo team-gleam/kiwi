@@ -4,10 +4,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.widget.EditText
+import android.view.View
 import androidx.fragment.app.DialogFragment
 import com.gleam.kiwi.R
 import com.gleam.kiwi.model.Details
+import kotlinx.android.synthetic.main.timetable_register_dialog_fragment.*
 
 class TimetableRegisterDialogFragment(private val dayOfWeek: TimetableEnum) : DialogFragment() {
 
@@ -28,25 +29,27 @@ class TimetableRegisterDialogFragment(private val dayOfWeek: TimetableEnum) : Di
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            val builder = AlertDialog.Builder(activity, R.style.DialogTheme)
-            val registerView =
-                it.layoutInflater.inflate(R.layout.timetable_register_dialog_fragment, null)
+            val registerView = View.inflate(
+                context,
+                R.layout.timetable_register_dialog_fragment,
+                null
+            )
 
-            builder.setView(registerView)
+            AlertDialog.Builder(it, R.style.DialogTheme)
+                .setView(registerView)
                 .setTitle("New subject")
                 .setPositiveButton(
                     "register"
                 ) { _, _ ->
                     val detail = Details(
-                        registerView.findViewById<EditText>(R.id.subject).text.toString(),
-                        registerView.findViewById<EditText>(R.id.room).text.toString(),
-                        registerView.findViewById<EditText>(R.id.memo).text.toString()
+                        subject.text.toString(),
+                        room.text.toString(),
+                        memo.text.toString()
                     )
                     listener.onRegisterClick(this, detail, dayOfWeek)
                 }
                 .setNegativeButton("cancel") { _, _ -> }
-
-            builder.create()
+                .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
