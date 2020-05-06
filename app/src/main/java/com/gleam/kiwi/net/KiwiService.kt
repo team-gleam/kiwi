@@ -3,7 +3,6 @@ package com.gleam.kiwi.net
 import com.gleam.kiwi.data.TimetableEntity
 import com.gleam.kiwi.model.Task
 import com.gleam.kiwi.model.Tasks
-import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -26,11 +25,11 @@ interface KiwiServiceInterFace {
     @POST("timetables")
     suspend fun registerTimetable(
         @Header("token") token: String,
-        @Body timetable: Timetable
+        @Body timetable: TimetableEntity
     ): Response<Unit>
 
     @GET("timetables")
-    suspend fun getTimetable(@Header("token") token: String): Response<Timetable?>
+    suspend fun getTimetable(@Header("token") token: String): Response<TimetableEntity?>
 
     @POST("tasks")
     suspend fun registerTask(@Header("token") token: String, @Body task: Task): Response<Unit>

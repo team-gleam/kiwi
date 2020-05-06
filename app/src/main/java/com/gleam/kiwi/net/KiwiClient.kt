@@ -1,13 +1,10 @@
 package com.gleam.kiwi.net
 
-import android.util.Log
-import com.gleam.kiwi.data.DayLessons
-import com.gleam.kiwi.data.TimetableEntity
+import com.gleam.kiwi.data.toEntity
 import com.gleam.kiwi.model.Task
 import com.gleam.kiwi.model.Tasks
 import com.gleam.kiwi.model.Timetable
 import com.gleam.kiwi.model.User
-import com.google.gson.Gson
 import java.net.SocketTimeoutException
 
 interface KiwiClientInterface {
@@ -15,8 +12,8 @@ interface KiwiClientInterface {
     suspend fun signIn(user: User): NetworkStatus
     suspend fun revokeUser(user: User): NetworkStatus
 
-    suspend fun registerTimetable(timetable: Timetable): NetworkStatus
-    suspend fun getTimetable(): NetworkStatusWithTimeTable
+    suspend fun registerTimetable(timetable: Timetable): FetchResult<Unit>
+    suspend fun getTimetable(): FetchResult<Timetable>
 
     suspend fun registerTask(task: Task): NetworkStatus
     suspend fun getTasks(): NetworkStatusWithTasks
@@ -67,30 +64,32 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         }
     }
 
-    override suspend fun registerTimetable(timetable: Timetable): NetworkStatus {
+    override suspend fun registerTimetable(timetable: Timetable): FetchResult<Unit> {
         return try {
-            when (kiwiService.registerTimetable(token, timetable).code()) {
-                200 -> NetworkStatus.Success
-                404 -> NetworkStatus.NotFound
-                else -> NetworkStatus.Error
+            when (kiwiService.registerTimetable(token, timetable.toEntity()).code()) {
+                200 -> FetchResult.Success(Unit)
+                404 -> FetchResult.NotFound
+                else -> FetchResult.Error
             }
         } catch (e: SocketTimeoutException) {
-            NetworkStatus.Timeout
+            FetchResult.Timeout
         }
     }
 
-    override suspend fun getTimetable(): NetworkStatusWithTimeTable {
-        return try {
+    override suspend fun getTimetable(): FetchResult<Timetable> =
+        try {
             val res = kiwiService.getTimetable(token)
-            when (res.code()) {
-                200 -> NetworkStatusWithTimeTable.Success(res.body())
-                404 -> NetworkStatusWithTimeTable.NotFound
-                else -> NetworkStatusWithTimeTable.Error
+            val code = res.code()
+            val timetable = res.body()?.toTimetable()
+
+            when {
+                code == 200 && timetable != null -> FetchResult.Success(timetable)
+                code == 404 -> FetchResult.NotFound
+                else -> FetchResult.Error
             }
         } catch (e: SocketTimeoutException) {
-            NetworkStatusWithTimeTable.Timeout
+            FetchResult.Timeout
         }
-    }
 
     override suspend fun registerTask(task: Task): NetworkStatus {
         return try {
@@ -130,18 +129,18 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
     }
 }
 
+sealed class FetchResult<out R> {
+    object NotFound : FetchResult<Nothing>()
+    object Timeout : FetchResult<Nothing>()
+    object Error : FetchResult<Nothing>()
+    class Success<R : Any>(val result: R) : FetchResult<R>()
+}
+
 enum class NetworkStatus {
     Success,
     NotFound,
     Timeout,
     Error
-}
-
-sealed class NetworkStatusWithTimeTable {
-    object NotFound : NetworkStatusWithTimeTable()
-    object Timeout : NetworkStatusWithTimeTable()
-    object Error : NetworkStatusWithTimeTable()
-    data class Success(val timetable: Timetable?) : NetworkStatusWithTimeTable()
 }
 
 sealed class NetworkStatusWithTasks {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,9 +15,7 @@
             name="handlers"
             type="com.gleam.kiwi.view.TimetableEventHandlers" />
 
-        <import type="android.view.View" />
-
-        <import type="com.gleam.kiwi.view.TimetableEnum" />
+        <import type="com.gleam.kiwi.model.Timetable" />
     </data>
 
 
@@ -157,6 +155,7 @@
             </LinearLayout>
 
             <TableLayout
+                android:id="@+id/timetable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/calendar_bg">
@@ -172,10 +171,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON1)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.MON1)}"
-                        app:textRoom="@{viewModel.timetable.timetable.mon.first.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.mon.first.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 1, 1)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 1, 1)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(1, 1).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(1, 1).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
@@ -183,10 +182,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE1)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.TUE1)}"
-                        app:textRoom="@{viewModel.timetable.timetable.tue.first.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.tue.first.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 2, 1)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 2, 1)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(2, 1).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(2, 1).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
@@ -194,10 +193,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED1)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.WED1)}"
-                        app:textRoom="@{viewModel.timetable.timetable.wed.first.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.wed.first.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 3, 1)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 3, 1)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(3, 1).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(3, 1).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
@@ -205,20 +204,20 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/border"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU1)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.THU1)}"
-                        app:textRoom="@{viewModel.timetable.timetable.thu.first.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.thu.first.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 4, 1)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 4, 1)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(4, 1).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(4, 1).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI1)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.FRI1)}"
-                        app:textRoom="@{viewModel.timetable.timetable.fri.first.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.fri.first.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 5, 1)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 5, 1)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(5, 1).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(5, 1).subject}" />
 
 
                 </TableRow>
@@ -234,50 +233,50 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON2)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.MON2)}"
-                        app:textRoom="@{viewModel.timetable.timetable.mon.second.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.mon.second.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 1, 2)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 1, 2)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(1, 2).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(1, 2).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE2)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.TUE2)}"
-                        app:textRoom="@{viewModel.timetable.timetable.tue.second.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.tue.second.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 2, 2)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 2, 2)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(2, 2).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(2, 2).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED2)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.WED2)}"
-                        app:textRoom="@{viewModel.timetable.timetable.wed.second.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.wed.second.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 3, 2)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 3, 2)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(3, 2).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(3, 2).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU2)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.THU2)}"
-                        app:textRoom="@{viewModel.timetable.timetable.thu.second.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.thu.second.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 4, 2)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 4, 2)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(4, 2).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(4, 2).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI2)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.FRI2)}"
-                        app:textRoom="@{viewModel.timetable.timetable.fri.second.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.fri.second.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 5, 2)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 5, 2)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(5, 2).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(5, 2).subject}" />
 
                 </TableRow>
 
@@ -291,31 +290,20 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON3)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.MON3)}"
-                        app:textRoom="@{viewModel.timetable.timetable.mon.third.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.mon.third.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 1, 3)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 1, 3)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(1, 3).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(1, 3).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE3)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.TUE3)}"
-                        app:textRoom="@{viewModel.timetable.timetable.tue.third.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.tue.third.subject}" />
-
-
-                    <include
-                        layout="@layout/timetable_cell"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED3)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.WED3)}"
-                        app:textRoom="@{viewModel.timetable.timetable.wed.third.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.wed.third.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 2, 3)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 2, 3)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(2, 3).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(2, 3).subject}" />
 
 
                     <include
@@ -323,10 +311,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU3)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.THU3)}"
-                        app:textRoom="@{viewModel.timetable.timetable.thu.third.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.thu.third.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 3, 3)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 3, 3)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(3, 3).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(3, 3).subject}" />
 
 
                     <include
@@ -334,10 +322,21 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI3)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.FRI3)}"
-                        app:textRoom="@{viewModel.timetable.timetable.fri.third.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.fri.third.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 4, 3)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 4, 3)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(4, 3).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(4, 3).subject}" />
+
+
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{(view) -> handlers.onClick(view, 5, 3)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 5, 3)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(5, 3).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(5, 3).subject}" />
 
                 </TableRow>
 
@@ -351,31 +350,20 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON4)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.MON4)}"
-                        app:textRoom="@{viewModel.timetable.timetable.mon.fourth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.mon.fourth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 1, 4)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 1, 4)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(1, 4).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(1, 4).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE4)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.TUE4)}"
-                        app:textRoom="@{viewModel.timetable.timetable.tue.fourth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.tue.fourth.subject}" />
-
-
-                    <include
-                        layout="@layout/timetable_cell"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED4)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.WED4)}"
-                        app:textRoom="@{viewModel.timetable.timetable.wed.fourth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.wed.fourth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 2, 4)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 2, 4)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(2, 4).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(2, 4).subject}" />
 
 
                     <include
@@ -383,10 +371,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU4)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.THU4)}"
-                        app:textRoom="@{viewModel.timetable.timetable.thu.fourth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.thu.fourth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 3, 4)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 3, 4)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(3, 4).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(3, 4).subject}" />
 
 
                     <include
@@ -394,10 +382,21 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI4)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.FRI4)}"
-                        app:textRoom="@{viewModel.timetable.timetable.fri.fourth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.fri.fourth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 4, 4)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 4, 4)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(4, 4).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(4, 4).subject}" />
+
+
+                    <include
+                        layout="@layout/timetable_cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{(view) -> handlers.onClick(view, 5, 4)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 5, 4)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(5, 4).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(5, 4).subject}" />
 
                 </TableRow>
 
@@ -411,50 +410,50 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.MON5)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.MON5)}"
-                        app:textRoom="@{viewModel.timetable.timetable.mon.fifth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.mon.fifth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 1, 5)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 1, 5)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(1, 5).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(1, 5).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.TUE5)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.TUE5)}"
-                        app:textRoom="@{viewModel.timetable.timetable.tue.fifth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.tue.fifth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 2, 5)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 2, 5)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(2, 5).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(2, 5).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.WED5)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.WED5)}"
-                        app:textRoom="@{viewModel.timetable.timetable.wed.fifth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.wed.fifth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 3, 5)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 3, 5)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(3, 5).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(3, 5).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.THU5)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.THU5)}"
-                        app:textRoom="@{viewModel.timetable.timetable.thu.fifth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.thu.fifth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 4, 5)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 4, 5)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(4, 5).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(4, 5).subject}" />
 
                     <include
                         layout="@layout/timetable_cell"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{(view) -> handlers.onClick(view, TimetableEnum.FRI5)}"
-                        android:onLongClick="@{(view) -> handlers.onLongClick(view, TimetableEnum.FRI5)}"
-                        app:textRoom="@{viewModel.timetable.timetable.fri.fifth.room}"
-                        app:textSubject="@{viewModel.timetable.timetable.fri.fifth.subject}" />
+                        android:onClick="@{(view) -> handlers.onClick(view, 5, 5)}"
+                        android:onLongClick="@{(view) -> handlers.onLongClick(view, 5, 5)}"
+                        app:textRoom="@{viewModel.timetable.findLessonDetails(5, 5).room}"
+                        app:textSubject="@{viewModel.timetable.findLessonDetails(5, 5).subject}" />
 
                 </TableRow>
 
