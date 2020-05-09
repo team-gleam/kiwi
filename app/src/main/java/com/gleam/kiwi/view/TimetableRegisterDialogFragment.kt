@@ -44,7 +44,6 @@ class TimetableRegisterDialogFragment(private val day: Day) : DialogFragment() {
                         room?.text.toString(),
                         memo?.text.toString()
                     )
-
                     listener.onRegisterClick(this, day, detail)
                 }
                 .setNegativeButton("cancel") { _, _ -> }

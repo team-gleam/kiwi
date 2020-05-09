@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.gleam.kiwi.R
+import kotlinx.android.synthetic.main.timetable_memo_dialog_fragment.view.*
 
 class TimetableMemoDialogFragment(private val memo: String?) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -17,16 +17,21 @@ class TimetableMemoDialogFragment(private val memo: String?) : DialogFragment() 
         }
 
         return activity?.let { it ->
-            val builder = AlertDialog.Builder(activity, R.style.DialogTheme)
             val memoView =
-                it.layoutInflater.inflate(R.layout.timetable_memo_dialog_fragment, null)
-            memoView.findViewById<TextView>(R.id.message_text).text = message
-            memoView.findViewById<TextView>(R.id.message_text).movementMethod =
-                LinkMovementMethod.getInstance()
-            builder.setView(memoView)
+                it.layoutInflater.inflate(
+                    R.layout.timetable_memo_dialog_fragment,
+                    it.findViewById(R.id.content)
+                ).also {
+                    it.message_text.apply {
+                        text = message
+                        movementMethod = LinkMovementMethod.getInstance()
+                    }
+                }
+            AlertDialog.Builder(activity, R.style.DialogTheme)
+                .setView(memoView)
                 .setTitle("Memo")
                 .setNegativeButton("close") { _, _ -> }
-            builder.create()
+                .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 

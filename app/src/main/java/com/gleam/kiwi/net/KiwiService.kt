@@ -42,7 +42,7 @@ interface KiwiServiceInterFace {
 }
 
 class KiwiService {
-    private val API_URL = "http://192.168.11.3:8000"
+    private val API_URL = "https://gleam.works:10080"
     private lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
