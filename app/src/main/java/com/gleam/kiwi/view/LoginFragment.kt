@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.gleam.kiwi.R
 import com.gleam.kiwi.ext.setBottomNavigationBar
-import com.gleam.kiwi.net.NetworkStatus
+import com.gleam.kiwi.net.FetchResult
 import com.gleam.kiwi.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.login_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -50,16 +50,16 @@ class LoginFragment : Fragment() {
         )
     }
 
-    private fun loginStatusDistributor(status: NetworkStatus) {
+    private fun loginStatusDistributor(status: FetchResult<Any?>) {
         when (status) {
-            NetworkStatus.Success -> findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
-            NetworkStatus.NotFound -> Toast.makeText(
+            is FetchResult.Success -> findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
+            is FetchResult.NotFound -> Toast.makeText(
                 context,
                 "Account Not Found",
                 Toast.LENGTH_SHORT
             ).show()
-            NetworkStatus.Error -> Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-            NetworkStatus.Timeout -> Toast.makeText(context, "Timeout", Toast.LENGTH_SHORT).show()
+            is FetchResult.Unexpected -> Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            is FetchResult.Timeout -> Toast.makeText(context, "Timeout", Toast.LENGTH_SHORT).show()
         }
     }
 

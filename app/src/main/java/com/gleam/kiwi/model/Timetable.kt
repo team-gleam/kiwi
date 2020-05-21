@@ -6,7 +6,6 @@ data class Timetable(
     val lessonMap: MutableMap<TimetableDayOfWeek, DayLessons> = mutableMapOf()
 ) {
 
-    // TODO move to right place
     fun findLessonDetails(x: Int, y: Int): LessonDetails? {
         return Day(
             TimetableDayOfWeek.on(x)
@@ -25,7 +24,16 @@ data class Day(
     val dayOfWeek: TimetableDayOfWeek,
     val period: Int
 ) {
-    companion object
+    companion object {
+        fun at(x: Int, y: Int): Day? {
+            return Day(
+                TimetableDayOfWeek.on(x)
+                    ?: return null,
+                y.takeIf { it in 1..5 }
+                    ?: return null
+            )
+        }
+    }
 }
 
 enum class TimetableDayOfWeek(val indexOnTimetable: Int) {

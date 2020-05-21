@@ -12,7 +12,6 @@ import com.gleam.kiwi.databinding.TimetableFragmentBinding
 import com.gleam.kiwi.ext.disableBackKey
 import com.gleam.kiwi.model.Day
 import com.gleam.kiwi.model.LessonDetails
-import com.gleam.kiwi.model.TimetableDayOfWeek
 import com.gleam.kiwi.view.TimetableRegisterDialogFragment.TimetableRegisterDialogListener
 import com.gleam.kiwi.viewmodel.TimetableViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -65,18 +64,7 @@ class TimetableFragment : Fragment(), TimetableEventHandlers,
         return true
     }
 
-    override fun onRegisterClick(dialog: DialogFragment, day: Day, detail: LessonDetails) {
+    override fun onRegisterClick(dialog: DialogFragment, day: Day, detail: LessonDetails) =
         timetableViewModel.registerSubject(day, detail)
-    }
-
-    // TODO remove
-    private fun Day.Companion.at(x: Int, y: Int): Day? {
-        return Day(
-            TimetableDayOfWeek.on(x)
-                ?: return null,
-            y.takeIf { it in 1..5 }
-                ?: return null
-        )
-    }
 
 }

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gleam.kiwi.model.Tasks
+import com.gleam.kiwi.net.FetchResult
 import com.gleam.kiwi.net.KiwiClient
-import com.gleam.kiwi.net.NetworkStatusWithTasks
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -27,8 +27,8 @@ class CalendarViewModel(private val client: KiwiClient) : ViewModel() {
         viewModelScope.launch {
             val res = client.getTasks()
             taskList = when (res) {
-                is NetworkStatusWithTasks.Success -> {
-                    res.tasks
+                is FetchResult.Success -> {
+                    res.result
                 }
                 else -> {
                     null

@@ -8,59 +8,59 @@ import com.gleam.kiwi.model.User
 import java.net.SocketTimeoutException
 
 interface KiwiClientInterface {
-    suspend fun signUp(user: User): NetworkStatus
-    suspend fun signIn(user: User): NetworkStatus
-    suspend fun revokeUser(user: User): NetworkStatus
+    suspend fun signUp(user: User): FetchResult<Unit>
+    suspend fun signIn(user: User): FetchResult<Unit>
+    suspend fun revokeUser(user: User): FetchResult<Unit>
 
     suspend fun registerTimetable(timetable: Timetable): FetchResult<Unit>
     suspend fun getTimetable(): FetchResult<Timetable>
 
-    suspend fun registerTask(task: Task): NetworkStatus
-    suspend fun getTasks(): NetworkStatusWithTasks
-    suspend fun removeTask(id: Int): NetworkStatus
+    suspend fun registerTask(task: Task): FetchResult<Unit>
+    suspend fun getTasks(): FetchResult<Tasks?>
+    suspend fun removeTask(id: Int): FetchResult<Unit>
 }
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
     private lateinit var token: String
-    override suspend fun signUp(user: User): NetworkStatus {
+    override suspend fun signUp(user: User): FetchResult<Unit> {
         return try {
             when (kiwiService.signUp(user).code()) {
-                200 -> NetworkStatus.Success
-                404 -> NetworkStatus.NotFound
-                else -> NetworkStatus.Error
+                200 -> FetchResult.Success(Unit)
+                404 -> FetchResult.NotFound
+                else -> FetchResult.Unexpected
             }
         } catch (e: SocketTimeoutException) {
-            NetworkStatus.Timeout
+            FetchResult.Timeout
         }
     }
 
-    override suspend fun signIn(user: User): NetworkStatus {
+    override suspend fun signIn(user: User): FetchResult<Unit> {
         return try {
             val res = kiwiService.getNewToken(user)
             return when (res.code()) {
                 200 -> {
                     res.body()?.let {
                         token = it
-                        NetworkStatus.Success
-                    } ?: NetworkStatus.NotFound
+                        FetchResult.Success(Unit)
+                    } ?: FetchResult.NotFound
                 }
-                404 -> NetworkStatus.NotFound
-                else -> NetworkStatus.Error
+                404 -> FetchResult.NotFound
+                else -> FetchResult.Unexpected
             }
         } catch (e: SocketTimeoutException) {
-            NetworkStatus.Timeout
+            FetchResult.Timeout
         }
     }
 
-    override suspend fun revokeUser(user: User): NetworkStatus {
+    override suspend fun revokeUser(user: User): FetchResult<Unit> {
         return try {
             when (kiwiService.revokeUser(user).code()) {
-                200 -> NetworkStatus.Success
-                404 -> NetworkStatus.NotFound
-                else -> NetworkStatus.Error
+                200 -> FetchResult.Success(Unit)
+                404 -> FetchResult.NotFound
+                else -> FetchResult.Unexpected
             }
         } catch (e: SocketTimeoutException) {
-            NetworkStatus.Timeout
+            FetchResult.Timeout
         }
     }
 
@@ -69,7 +69,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
             when (kiwiService.registerTimetable(token, timetable.toEntity()).code()) {
                 200 -> FetchResult.Success(Unit)
                 404 -> FetchResult.NotFound
-                else -> FetchResult.Error
+                else -> FetchResult.Unexpected
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
@@ -85,46 +85,46 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
             when {
                 code == 200 && timetable != null -> FetchResult.Success(timetable)
                 code == 404 -> FetchResult.NotFound
-                else -> FetchResult.Error
+                else -> FetchResult.Unexpected
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
         }
 
-    override suspend fun registerTask(task: Task): NetworkStatus {
+    override suspend fun registerTask(task: Task): FetchResult<Unit> {
         return try {
             when (kiwiService.registerTask(token, task).code()) {
-                200 -> NetworkStatus.Success
-                404 -> NetworkStatus.NotFound
-                else -> NetworkStatus.Error
+                200 -> FetchResult.Success(Unit)
+                404 -> FetchResult.NotFound
+                else -> FetchResult.Unexpected
             }
         } catch (e: SocketTimeoutException) {
-            NetworkStatus.Timeout
+            FetchResult.Timeout
         }
     }
 
-    override suspend fun getTasks(): NetworkStatusWithTasks {
+    override suspend fun getTasks(): FetchResult<Tasks?> {
         return try {
             val res = kiwiService.getTasks(token)
             when (res.code()) {
-                200 -> NetworkStatusWithTasks.Success(res.body())
-                404 -> NetworkStatusWithTasks.NotFound
-                else -> NetworkStatusWithTasks.Error
+                200 -> FetchResult.Success(res.body())
+                404 -> FetchResult.NotFound
+                else -> FetchResult.Unexpected
             }
         } catch (e: SocketTimeoutException) {
-            NetworkStatusWithTasks.Timeout
+            FetchResult.Timeout
         }
     }
 
-    override suspend fun removeTask(id: Int): NetworkStatus {
+    override suspend fun removeTask(id: Int): FetchResult<Unit> {
         return try {
             when (kiwiService.removeTask(token, id).code()) {
-                200 -> NetworkStatus.Success
-                404 -> NetworkStatus.NotFound
-                else -> NetworkStatus.Error
+                200 -> FetchResult.Success(Unit)
+                404 -> FetchResult.NotFound
+                else -> FetchResult.Unexpected
             }
         } catch (e: SocketTimeoutException) {
-            NetworkStatus.Timeout
+            FetchResult.Timeout
         }
     }
 }
@@ -132,20 +132,6 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
 sealed class FetchResult<out R> {
     object NotFound : FetchResult<Nothing>()
     object Timeout : FetchResult<Nothing>()
-    object Error : FetchResult<Nothing>()
-    class Success<R : Any>(val result: R) : FetchResult<R>()
-}
-
-enum class NetworkStatus {
-    Success,
-    NotFound,
-    Timeout,
-    Error
-}
-
-sealed class NetworkStatusWithTasks {
-    object NotFound : NetworkStatusWithTasks()
-    object Timeout : NetworkStatusWithTasks()
-    object Error : NetworkStatusWithTasks()
-    data class Success(val tasks: Tasks?) : NetworkStatusWithTasks()
+    object Unexpected : FetchResult<Nothing>()
+    class Success<R : Any?>(val result: R) : FetchResult<R>()
 }

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gleam.kiwi.model.Task
+import com.gleam.kiwi.net.FetchResult
 import com.gleam.kiwi.net.KiwiClient
-import com.gleam.kiwi.net.NetworkStatusWithTasks
 import kotlinx.coroutines.launch
 
 class DayDetailViewModel(val date: String, val client: KiwiClient) : ViewModel() {
@@ -23,7 +23,7 @@ class DayDetailViewModel(val date: String, val client: KiwiClient) : ViewModel()
     private fun setTaskList() {
         viewModelScope.launch {
             val tasks = when (val res = client.getTasks()) {
-                is NetworkStatusWithTasks.Success -> res.tasks
+                is FetchResult.Success -> res.result
                 else -> null
             }
             _taskList?.value = getSpecifiedDaysTasks(date, tasks?.tasks)
