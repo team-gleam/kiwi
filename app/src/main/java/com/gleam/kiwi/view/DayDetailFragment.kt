@@ -35,17 +35,28 @@ class DayDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         taskRecyclerAdapter = TaskRecyclerAdapter(this@DayDetailFragment::onItemClick)
-        dayDetailViewModel = DayDetailViewModel(date = action.content, client = get())
 
         taskRecyclerView.apply {
             adapter = taskRecyclerAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
-        register.setOnClickListener {
+        dayDetailViewModel =
+            DayDetailViewModel(date = action.content, client = get()).also { viewModel ->
+                viewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
+                    tasks?.let { taskRecyclerAdapter.setTasks(it) }
+                })
+            }
+
+        button_register.setOnClickListener {
             taskRegister()
         }
 
+        // change the behavior of BackKey to redraw
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() =
+                findNavController().navigate(R.id.action_dayDetailFragment_to_calendarFragment)
+        })
         setBottomNavigationBar(false)
     }
 
@@ -57,19 +68,6 @@ class DayDetailFragment : Fragment() {
                 }
             }.show(childFragmentManager, "DeleteTask")
         }
-    }
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        dayDetailViewModel.taskList?.observe(viewLifecycleOwner, Observer { tasks ->
-            tasks?.let { taskRecyclerAdapter.setTasks(it) }
-        })
-        // disable back key and nav to calendar
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() =
-                findNavController().navigate(R.id.action_dayDetailFragment_to_calendarFragment)
-        })
     }
 
     private fun taskRegister() {

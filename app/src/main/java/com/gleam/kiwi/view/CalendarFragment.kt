@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.gleam.kiwi.R
+import com.gleam.kiwi.ext.disableBackKey
 import com.gleam.kiwi.ext.setBottomNavigationBar
 import com.gleam.kiwi.ext.setTextColorRes
 import com.gleam.kiwi.viewmodel.CalendarViewModel
@@ -46,25 +46,22 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupDaysOfWeek()
         setupCalendar()
+        dayContainsTaskObserve()
+        disableBackKey()
         setBottomNavigationBar(true)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    private fun dayContainsTaskObserve() {
         viewModel.daysContainTask.observe(
             viewLifecycleOwner,
             Observer { taskList: List<LocalDate>? ->
                 taskList?.forEach { task ->
                     calendar.notifyDateChanged(task)
                 }
-            })
-        // disable back key
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() = Unit
-        })
+            }
+        )
     }
-    
+
     private fun setupDaysOfWeek() {
         day_of_week.children.mapNotNull { it as? TextView }
             .forEachIndexed { index, textView ->
@@ -93,21 +90,27 @@ class CalendarFragment : Fragment() {
                 override fun bind(container: CalendarContainer, day: CalendarDay) {
                     val date = day.date
                     container.day = day
-                    container.textView.setOnClickListener {
-                        val action =
-                            CalendarFragmentDirections.actionCalendarFragmentToDayDetailFragment(
-                                date.toString()
-                            )
-                        findNavController().navigate(action)
-                    }
                     container.textView.apply {
                         text = date.dayOfMonth.toString()
                         setTextColorRes(R.color.white)
-                        when {
-                            day.owner == DayOwner.THIS_MONTH && day.date == today ->
-                                setBackgroundResource(R.drawable.today_bg)
-                            day.owner == DayOwner.THIS_MONTH -> setTextColorRes(R.color.white)
+
+                        when (day.owner) {
+                            DayOwner.THIS_MONTH -> {
+                                if (day.date == today) {
+                                    setBackgroundResource(R.drawable.today_bg)
+                                } else {
+                                    setTextColorRes(R.color.white)
+                                }
+                            }
                             else -> setTextColorRes(R.color.white_light)
+                        }
+
+                        setOnClickListener {
+                            val action =
+                                CalendarFragmentDirections.actionCalendarFragmentToDayDetailFragment(
+                                    date.toString()
+                                )
+                            findNavController().navigate(action)
                         }
                     }
                     viewModel.daysContainTask.value?.let { daysContainTask ->

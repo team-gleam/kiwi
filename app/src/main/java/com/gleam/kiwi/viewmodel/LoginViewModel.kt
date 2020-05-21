@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gleam.kiwi.model.User
+import com.gleam.kiwi.net.FetchResult
 import com.gleam.kiwi.net.KiwiClient
-import com.gleam.kiwi.net.NetworkStatus
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val client: KiwiClient) : ViewModel() {
-    private val _loginStatus: MutableLiveData<NetworkStatus> = MutableLiveData()
-    val loginStatus: LiveData<NetworkStatus>
+    private val _loginStatus: MutableLiveData<FetchResult<Any?>> = MutableLiveData()
+    val loginStatus: LiveData<FetchResult<Any?>>
         get() {
             return _loginStatus
         }

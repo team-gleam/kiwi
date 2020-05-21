@@ -28,7 +28,7 @@
             app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_calendarFragment_to_copyRightFragment"
-            app:destination="@id/copyRightFragment"
+            app:destination="@id/copyrightFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
     </fragment>
@@ -46,7 +46,7 @@
             app:destination="@id/calendarFragment" />
     </fragment>
     <fragment
-        android:id="@+id/copyRightFragment"
+        android:id="@+id/copyrightFragment"
         android:name="com.gleam.kiwi.view.CopyRightFragment"
         android:label="CopyRightFragment" />
     <fragment
