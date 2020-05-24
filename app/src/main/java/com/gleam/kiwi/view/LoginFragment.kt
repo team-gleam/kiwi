@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.gleam.kiwi.R
 import com.gleam.kiwi.ext.setBottomNavigationBar
+import com.gleam.kiwi.model.User
 import com.gleam.kiwi.net.FetchResult
 import com.gleam.kiwi.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.login_fragment.*
@@ -37,28 +38,62 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn() {
-        viewModel.signIn(
-            extractUsername(),
-            extractPassword()
-        )
+        val user = User(extractUsername(), extractPassword())
+        val validateUsernameResult = user.validateUsername()
+        val validatePasswordResult = user.validatePassword()
+        when {
+            validateUsernameResult is ValidationResult.OK && validatePasswordResult is ValidationResult.OK ->
+                viewModel.signIn(user)
+
+            validateUsernameResult is ValidationResult.OK -> setErrorMessageForPasswordField(
+                validatePasswordResult
+            )
+            validatePasswordResult is ValidationResult.OK -> setErrorMessageForUsernameField(
+                validateUsernameResult
+            )
+            else -> {
+                setErrorMessageForUsernameField(validateUsernameResult)
+                setErrorMessageForPasswordField(validatePasswordResult)
+            }
+        }
     }
 
     private fun signUp() {
-        viewModel.signUp(
-            extractUsername(),
-            extractPassword()
-        )
+        val user = User(extractUsername(), extractPassword())
+        val validateUsernameResult = user.validateUsername()
+        val validatePasswordResult = user.validatePassword()
+        when {
+            validateUsernameResult is ValidationResult.OK && validatePasswordResult is ValidationResult.OK -> viewModel.signUp(
+                user
+            )
+            validateUsernameResult is ValidationResult.OK -> setErrorMessageForPasswordField(
+                validatePasswordResult
+            )
+            validatePasswordResult is ValidationResult.OK -> setErrorMessageForUsernameField(
+                validateUsernameResult
+            )
+            else -> {
+                setErrorMessageForUsernameField(validateUsernameResult)
+                setErrorMessageForPasswordField(validatePasswordResult)
+            }
+        }
     }
 
     private fun loginStatusDistributor(status: FetchResult<Any?>) {
         when (status) {
             is FetchResult.Success -> findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
-            is FetchResult.NotFound -> Toast.makeText(
+            is FetchResult.InvalidData -> Toast.makeText(
                 context,
-                "Account Not Found",
+                "Username or Password is invalid",
                 Toast.LENGTH_SHORT
             ).show()
-            is FetchResult.Unexpected -> Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            is FetchResult.InternalError -> Toast.makeText(
+                context,
+                "Internal Error",
+                Toast.LENGTH_SHORT
+            )
+            is FetchResult.UnexpectedError -> Toast.makeText(context, "Error", Toast.LENGTH_SHORT)
+                .show()
             is FetchResult.Timeout -> Toast.makeText(context, "Timeout", Toast.LENGTH_SHORT).show()
         }
     }
@@ -71,4 +106,28 @@ class LoginFragment : Fragment() {
         return password_text_field.text.toString()
     }
 
+    private fun setErrorMessageForUsernameField(result: ValidationResult) {
+        username_text_field.error = when (result) {
+            is ValidationResult.NotAllowedPattern -> "Username is consists only of alphanumeric characters"
+            is ValidationResult.TooShort -> "Username must be at least one character"
+            is ValidationResult.TooLong -> "Username must be less than ${result.maxLength} characters long"
+            else -> ""
+        }
+    }
+
+    private fun setErrorMessageForPasswordField(result: ValidationResult) {
+        password_text_field.error = when (result) {
+            is ValidationResult.NotAllowedPattern -> "Password is consists only of alphanumeric characters"
+            is ValidationResult.TooShort -> "Password must be at least eight character"
+            is ValidationResult.TooLong -> "Password must be less than ${result.maxLength} characters long"
+            else -> ""
+        }
+    }
+}
+
+sealed class ValidationResult {
+    object OK : ValidationResult()
+    object NotAllowedPattern : ValidationResult()
+    object TooShort : ValidationResult()
+    class TooLong(val maxLength: Int) : ValidationResult()
 }
