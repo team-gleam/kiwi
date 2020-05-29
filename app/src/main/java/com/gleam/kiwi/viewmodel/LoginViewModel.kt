@@ -10,23 +10,26 @@ import com.gleam.kiwi.net.KiwiClient
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val client: KiwiClient) : ViewModel() {
-    private val _loginStatus: MutableLiveData<FetchResult<Any?>> = MutableLiveData()
-    val loginStatus: LiveData<FetchResult<Any?>>
+    private val _loginStatus: MutableLiveData<FetchResult<Unit>> = MutableLiveData()
+    val loginStatus: LiveData<FetchResult<Unit>>
         get() {
             return _loginStatus
         }
 
-    fun signIn(username: String, password: String) {
-        val user = User(username, password)
+    fun signIn(user: User) {
         viewModelScope.launch {
             _loginStatus.value = client.signIn(user)
         }
     }
 
-    fun signUp(username: String, password: String) {
-        val user = User(username, password)
+    fun signUp(user: User) {
         viewModelScope.launch {
-            _loginStatus.value = client.signUp(user)
+            when (val result = client.signUp(user)) {
+                is FetchResult.Success -> signIn(user)
+                else -> {
+                    _loginStatus.value = result
+                }
+            }
         }
     }
 }

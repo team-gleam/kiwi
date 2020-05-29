@@ -13,7 +13,7 @@ interface KiwiClientInterface {
     suspend fun revokeUser(user: User): FetchResult<Unit>
 
     suspend fun registerTimetable(timetable: Timetable): FetchResult<Unit>
-    suspend fun getTimetable(): FetchResult<Timetable>
+    suspend fun getTimetable(): FetchResult<Timetable?>
 
     suspend fun registerTask(task: Task): FetchResult<Unit>
     suspend fun getTasks(): FetchResult<Tasks?>
@@ -26,8 +26,10 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         return try {
             when (kiwiService.signUp(user).code()) {
                 200 -> FetchResult.Success(Unit)
-                404 -> FetchResult.NotFound
-                else -> FetchResult.Unexpected
+                400 -> FetchResult.InvalidFormat
+                409 -> FetchResult.AlreadyExist
+                500 -> FetchResult.InternalError
+                else -> FetchResult.UnexpectedError
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
@@ -42,10 +44,12 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
                     res.body()?.let {
                         token = it
                         FetchResult.Success(Unit)
-                    } ?: FetchResult.NotFound
+                    } ?: FetchResult.InvalidData
                 }
-                404 -> FetchResult.NotFound
-                else -> FetchResult.Unexpected
+                400 -> FetchResult.InvalidFormat
+                401 -> FetchResult.InvalidData
+                500 -> FetchResult.InternalError
+                else -> FetchResult.UnexpectedError
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
@@ -56,8 +60,10 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         return try {
             when (kiwiService.revokeUser(user).code()) {
                 200 -> FetchResult.Success(Unit)
-                404 -> FetchResult.NotFound
-                else -> FetchResult.Unexpected
+                400 -> FetchResult.InvalidFormat
+                401 -> FetchResult.InvalidData
+                500 -> FetchResult.InternalError
+                else -> FetchResult.UnexpectedError
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
@@ -68,24 +74,26 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         return try {
             when (kiwiService.registerTimetable(token, timetable.toEntity()).code()) {
                 200 -> FetchResult.Success(Unit)
-                404 -> FetchResult.NotFound
-                else -> FetchResult.Unexpected
+                400 -> FetchResult.InvalidFormat
+                401 -> FetchResult.InvalidData
+                500 -> FetchResult.InternalError
+                else -> FetchResult.UnexpectedError
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
         }
     }
 
-    override suspend fun getTimetable(): FetchResult<Timetable> =
+    override suspend fun getTimetable(): FetchResult<Timetable?> =
         try {
             val res = kiwiService.getTimetable(token)
-            val code = res.code()
-            val timetable = res.body()?.toTimetable()
-
-            when {
-                code == 200 && timetable != null -> FetchResult.Success(timetable)
-                code == 404 -> FetchResult.NotFound
-                else -> FetchResult.Unexpected
+            when (res.code()) {
+                200 -> FetchResult.Success(res.body()?.toTimetable())
+                400 -> FetchResult.InvalidFormat
+                401 -> FetchResult.InvalidData
+                404 -> FetchResult.NotFound
+                500 -> FetchResult.InternalError
+                else -> FetchResult.UnexpectedError
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
@@ -95,8 +103,9 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         return try {
             when (kiwiService.registerTask(token, task).code()) {
                 200 -> FetchResult.Success(Unit)
-                404 -> FetchResult.NotFound
-                else -> FetchResult.Unexpected
+                400 -> FetchResult.InvalidFormat
+                401 -> FetchResult.InvalidData
+                else -> FetchResult.UnexpectedError
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
@@ -108,8 +117,9 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
             val res = kiwiService.getTasks(token)
             when (res.code()) {
                 200 -> FetchResult.Success(res.body())
-                404 -> FetchResult.NotFound
-                else -> FetchResult.Unexpected
+                401 -> FetchResult.InvalidData
+                500 -> FetchResult.InternalError
+                else -> FetchResult.UnexpectedError
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
@@ -120,8 +130,9 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         return try {
             when (kiwiService.removeTask(token, id).code()) {
                 200 -> FetchResult.Success(Unit)
-                404 -> FetchResult.NotFound
-                else -> FetchResult.Unexpected
+                400 -> FetchResult.InvalidFormat
+                401 -> FetchResult.InvalidData
+                else -> FetchResult.UnexpectedError
             }
         } catch (e: SocketTimeoutException) {
             FetchResult.Timeout
@@ -130,8 +141,12 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
 }
 
 sealed class FetchResult<out R> {
+    object InvalidFormat : FetchResult<Nothing>()
+    object InvalidData : FetchResult<Nothing>()
+    object AlreadyExist : FetchResult<Nothing>()
+    object InternalError : FetchResult<Nothing>()
     object NotFound : FetchResult<Nothing>()
     object Timeout : FetchResult<Nothing>()
-    object Unexpected : FetchResult<Nothing>()
+    object UnexpectedError : FetchResult<Nothing>()
     class Success<R : Any?>(val result: R) : FetchResult<R>()
 }
