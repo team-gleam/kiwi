@@ -4,11 +4,13 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.gleam.kiwi.R
 import com.gleam.kiwi.model.Day
 import com.gleam.kiwi.model.LessonDetails
 import kotlinx.android.synthetic.main.timetable_register_dialog_fragment.*
+import kotlinx.android.synthetic.main.timetable_register_dialog_fragment.view.*
 
 class TimetableRegisterDialogFragment(private val day: Day) : DialogFragment() {
 
@@ -40,9 +42,9 @@ class TimetableRegisterDialogFragment(private val day: Day) : DialogFragment() {
                 .setTitle("New subject")
                 .setPositiveButton("register") { _, _ ->
                     val detail = LessonDetails(
-                        subject?.text.toString(),
-                        room?.text.toString(),
-                        memo?.text.toString()
+                        registerView.subject?.text.toString(),
+                        registerView.room?.text.toString(),
+                        registerView.memo?.text.toString()
                     )
                     listener.onRegisterClick(this, day, detail)
                 }

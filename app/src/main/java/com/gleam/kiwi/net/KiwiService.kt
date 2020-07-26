@@ -1,9 +1,7 @@
 package com.gleam.kiwi.net
 
 import com.gleam.kiwi.data.TimetableEntity
-import com.gleam.kiwi.model.Task
-import com.gleam.kiwi.model.Tasks
-import com.gleam.kiwi.model.User
+import com.gleam.kiwi.model.*
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -20,7 +18,7 @@ interface KiwiServiceInterFace {
     suspend fun revokeUser(@Body user: User): Response<Unit>
 
     @POST("tokens")
-    suspend fun getNewToken(@Body user: User): Response<String?>
+    suspend fun getNewToken(@Body user: User): Response<Tokens>
 
     @POST("timetables")
     suspend fun registerTimetable(
@@ -38,11 +36,11 @@ interface KiwiServiceInterFace {
     suspend fun getTasks(@Header("token") token: String): Response<Tasks?>
 
     @HTTP(method = "DELETE", path = "tasks", hasBody = true)
-    suspend fun removeTask(@Header("token") token: String, @Body id: Int): Response<Unit>
+    suspend fun removeTask(@Header("token") token: String, @Body id: TaskId): Response<Unit>
 }
 
 class KiwiService {
-    private val API_URL = "https://gleam.works:10080"
+    private val API_URL = "https://kiwi.gleam.works"
     private lateinit var retrofit: Retrofit
     private val httpBuilder = OkHttpClient.Builder()
 
