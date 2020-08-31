@@ -1,5 +1,6 @@
 package com.gleam.kiwi.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,7 +36,8 @@ class TimetableViewModel(private val client: KiwiClient) : ViewModel() {
     fun registerSubject(day: Day, details: LessonDetails) {
         viewModelScope.launch {
             setTimetable(day, details)
-            timetable.value?.let { client.registerTimetable(it) }
+            timetable.value?.let {
+                client.registerTimetable(it) }
             loadTimetable()
         }
     }

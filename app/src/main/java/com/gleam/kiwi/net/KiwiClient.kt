@@ -1,10 +1,8 @@
 package com.gleam.kiwi.net
 
+import android.util.Log
 import com.gleam.kiwi.data.toEntity
-import com.gleam.kiwi.model.Task
-import com.gleam.kiwi.model.Tasks
-import com.gleam.kiwi.model.Timetable
-import com.gleam.kiwi.model.User
+import com.gleam.kiwi.model.*
 import java.net.SocketTimeoutException
 
 interface KiwiClientInterface {
@@ -17,7 +15,7 @@ interface KiwiClientInterface {
 
     suspend fun registerTask(task: Task): FetchResult<Unit>
     suspend fun getTasks(): FetchResult<Tasks?>
-    suspend fun removeTask(id: Int): FetchResult<Unit>
+    suspend fun removeTask(id: TaskId): FetchResult<Unit>
 }
 
 class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInterface {
@@ -42,7 +40,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
             return when (res.code()) {
                 200 -> {
                     res.body()?.let {
-                        token = it
+                        token = it.token
                         FetchResult.Success(Unit)
                     } ?: FetchResult.InvalidData
                 }
@@ -126,7 +124,7 @@ class KiwiClient(private val kiwiService: KiwiServiceInterFace) : KiwiClientInte
         }
     }
 
-    override suspend fun removeTask(id: Int): FetchResult<Unit> {
+    override suspend fun removeTask(id: TaskId): FetchResult<Unit> {
         return try {
             when (kiwiService.removeTask(token, id).code()) {
                 200 -> FetchResult.Success(Unit)

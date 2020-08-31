@@ -1,10 +1,12 @@
 package com.gleam.kiwi.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gleam.kiwi.model.Task
+import com.gleam.kiwi.model.TaskId
 import com.gleam.kiwi.net.FetchResult
 import com.gleam.kiwi.net.KiwiClient
 import kotlinx.coroutines.launch
@@ -37,7 +39,7 @@ class DayDetailViewModel(val date: String, val client: KiwiClient) : ViewModel()
 
     fun registerTask(task: String) {
         viewModelScope.launch {
-            client.registerTask(Task(-1, date, task))
+            client.registerTask(Task("-1", date, task))
             setTaskList()
         }
     }
@@ -45,7 +47,7 @@ class DayDetailViewModel(val date: String, val client: KiwiClient) : ViewModel()
     fun deleteTask(position: Int) {
         viewModelScope.launch {
             taskList?.value?.get(position)?.let {
-                client.removeTask(it.id)
+                client.removeTask(TaskId(it.id))
                 setTaskList()
             }
         }

@@ -5,7 +5,8 @@ data class Tasks(
 )
 
 data class Task(
-    val id: Int,
+    val id: String,
     val date: String,
     val title: String
 )
+
